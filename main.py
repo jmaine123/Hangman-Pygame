@@ -26,7 +26,7 @@ menu_font = pygame.font.Font('freesansbold.ttf', 32)
 image = pygame.image.load("hangman1.svg")
 hangman_image = pygame.transform.scale(image, IMAGE_SIZE)
 guessed_letters = set()
-attempts_left = 6
+# attempts_left = 6
 
 
 # Load word list (you can replace this with your own list)
@@ -47,7 +47,7 @@ word_list = [ "The Hulk", "Spiderman", "The Avengers", "Iron Man", "Captain Amer
         "Venom", "Magneto", "Night Crawler", "Madame Web", "Carnage",
         "King pin", "Doctor Octopus", "The Lizard", " She Hulk"
         ]
-chosen_word = random.choice(word_list).upper()
+# chosen_word = random.choice(word_list).upper()
 
 
 
@@ -72,12 +72,9 @@ class Button:
         mouse_click = pygame.mouse.get_pressed()
         if self.button.collidepoint(mouse_pos) and mouse_click[0]:
             return True
-            # print("clicked")
-            playGame()
-            pygame.time.delay(3000)
 
 
-def displayGameStatus(display_word):
+def displayGameStatus(display_word, attempts_left, chosen_word):
     losing_text_options = ["Nice Try!!!", "Oh Sorry!!!", "Oh So Close!!!", "Try again", "Loser!!!!!"]
     chosen_losing_text = random.choice(losing_text_options).upper()
     if attempts_left == 0:
@@ -105,7 +102,7 @@ def configBoard():
     pass
 
 
-def swapLetters():
+def swapLetters(chosen_word):
     board = []
     for letter in chosen_word:
         if letter in guessed_letters:
@@ -139,8 +136,11 @@ def mainMenu():
         # start_game = False
         
         if new_game.checkClicked():
-            # print("clicked")
-            playGame()
+            global guessed_letters 
+            guessed_letters = set()
+            chosen_word = random.choice(word_list).upper()  
+            attempts_left = 6
+            playGame(chosen_word, attempts_left)
             pygame.time.delay(3000)
         if exit_btn.checkClicked():
             pygame.quit()
@@ -155,8 +155,7 @@ def mainMenu():
 
 
 
-def playGame():
-    global attempts_left
+def playGame(chosen_word, attempts_left):
     clock = pygame.time.Clock()
     running = True
     while running:   
@@ -171,7 +170,7 @@ def playGame():
         screen.fill(PURPLE)
         # Draw the word with underscores for unguessed letters
         # display_word = "".join([letter + " " if letter in guessed_letters else " __ " for letter in chosen_word])
-        display_word = swapLetters()
+        display_word = swapLetters(chosen_word)
         font = pygame.font.Font(None, FONT_SIZE)
         text_surface = font.render(display_word, True, WHITE)
         moves_left = font.render(str(attempts_left), True, WHITE)
@@ -194,7 +193,7 @@ def playGame():
         # Update the display
         pygame.display.flip()
 
-        displayGameStatus(display_word)
+        displayGameStatus(display_word, attempts_left, chosen_word)
         
         # Check for game over conditions
         if attempts_left == 0 or " __ " not in display_word:
