@@ -48,7 +48,7 @@ guessed_letters = set()
 #         "King pin", "Doctor Octopus", "The Lizard", " She Hulk"
 #         ]
 
-categories = ["Marvel", "NBA", "Artists"]
+selected_cat = "Marvel"
 
 
 word_dict = {
@@ -184,16 +184,15 @@ def drawGuessLetters(chosen_word):
         
 
 def selectCategory():
-    selected = False
+    global selected_cat
     
-    while selected == False:         
+    while True:         
         screen.fill(YELLOW)
-        firstbtn_x = 300
-        firstbtn_y = 100
         
         for event in pygame.event.get():
             if event.type == pygame.QUIT:
                 pygame.quit()
+                sys.exit()
         
         marvel_btn = Button("Marvel", GREEN, (300, 100))
         marvel_btn.draw()
@@ -202,8 +201,19 @@ def selectCategory():
         artists_btn = Button("Artists", GREEN, (300, 300))
         artists_btn.draw()
         
-        
         pygame.display.update()
+        
+        
+        if marvel_btn.checkClicked():
+            selected_cat = "Marvel"
+            return False
+        elif nba_btn.checkClicked():
+            selected_cat = "NBA"
+            return False
+        elif artists_btn.checkClicked():
+            selected_cat = "Artists"
+            return False
+
             
         
         
@@ -222,6 +232,7 @@ def mainMenu():
         for event in pygame.event.get():
             if event.type == pygame.QUIT:
                 pygame.quit()
+                sys.exit()
         
         menu_x = 300
         menu_y = SCREEN_HEIGHT//2
@@ -230,18 +241,16 @@ def mainMenu():
         
         exit_btn = Button("Exit", RED, (menu_x, menu_y + 100))
         exit_btn.draw()
-        # menu_btn = pygame.draw.rect(screen, GREEN, [menu_x, menu_y, 200, 50])
-        # screen.blit(text, (menu_x + 10, menu_y + 10))
-        # start_game = False
+
         pygame.display.flip()
         
         if new_game.checkClicked():
             selectCategory()
             global guessed_letters
             guessed_letters = set()
-            chosen_word = configBoard("NBA") 
+            chosen_word = configBoard(selected_cat) 
             attempts_left = 6
-            playGame(chosen_word, attempts_left)
+            playGame(chosen_word, attempts_left, selected_cat)
             pygame.time.delay(3000)
         if exit_btn.checkClicked():
             running = False
@@ -253,7 +262,7 @@ def mainMenu():
 
 
 
-def playGame(chosen_word, attempts_left):
+def playGame(chosen_word, attempts_left, selected_cat):
     clock = pygame.time.Clock()
     running = True
     while running:   
@@ -264,6 +273,8 @@ def playGame(chosen_word, attempts_left):
             if event.type == pygame.QUIT:
                 running = False
                 pygame.quit()
+                sys.exit()
+
         
             
         screen.fill(PURPLE)
@@ -273,10 +284,12 @@ def playGame(chosen_word, attempts_left):
         font = pygame.font.Font(None, FONT_SIZE)
         text_surface = font.render(display_word, True, WHITE)
         moves_left = font.render(str(attempts_left), True, WHITE)
+        cat_text = font.render(selected_cat, True, WHITE)
         # screen.blit(text_surface, (SCREEN_WIDTH // 2 - text_surface.get_width() // 2, SCREEN_HEIGHT / 2))
         screen.blit(text_surface, (IMAGE_PADDING + hangman_image.get_width() + 50, SCREEN_HEIGHT / 2))
         screen.blit(hangman_image, (IMAGE_PADDING, 200))
         screen.blit(moves_left, (20,500))
+        screen.blit(cat_text, (20,50))
 
         # Check for keyboard input
         keys = pygame.key.get_pressed()
