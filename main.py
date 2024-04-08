@@ -107,6 +107,7 @@ class Button:
         self.color = color
         self.pos = pos
         self.button = pygame.rect.Rect(self.pos[0], self.pos[1], 200, 50)
+        self.clicked = False
         
         
     def draw(self):
@@ -118,8 +119,12 @@ class Button:
     def checkClicked(self):
         mouse_pos = pygame.mouse.get_pos()
         mouse_click = pygame.mouse.get_pressed()
-        if self.button.collidepoint(mouse_pos) and mouse_click[0]:
-            return True
+        if self.button.collidepoint(mouse_pos):
+            if mouse_click[0] == 1 and self.clicked == False:
+                self.clicked = True
+                return True
+        if mouse_click[0] == 0:
+            self.clicked = False
     
     def isHoveredOver(self, color):
         mouse_pos = pygame.mouse.get_pos()
@@ -194,26 +199,27 @@ def selectCategory():
                 pygame.quit()
                 sys.exit()
         
-        marvel_btn = Button("Marvel", GREEN, (300, 100))
+        marvel_btn = Button("Marvel", GREEN, (300, 150))
         marvel_btn.draw()
-        nba_btn = Button("NBA", GREEN, (300, 200))
+        artist_btn = Button("Artists", GREEN, (300, 350))
+        artist_btn.draw()
+        nba_btn = Button("NBA", GREEN, (300, 250))
         nba_btn.draw()
-        artists_btn = Button("Artists", GREEN, (300, 300))
-        artists_btn.draw()
         
-        pygame.display.update()
-        
+        pygame.display.flip()
         
         if marvel_btn.checkClicked():
             selected_cat = "Marvel"
-            return False
-        elif nba_btn.checkClicked():
-            selected_cat = "NBA"
-            return False
-        elif artists_btn.checkClicked():
+            break
+        if artist_btn.checkClicked():
             selected_cat = "Artists"
-            return False
+            break
+        if nba_btn.checkClicked():
+            selected_cat = "NBA"
+            break
+            
 
+        
             
         
         
