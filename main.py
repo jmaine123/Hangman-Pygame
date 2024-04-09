@@ -22,36 +22,19 @@ IMAGE_PADDING = 10
 
 #game variables
 screen = pygame.display.set_mode((SCREEN_WIDTH, SCREEN_HEIGHT))
-pygame.display.set_caption('Hangman Two Game')
-menu_font = pygame.font.Font('freesansbold.ttf', 32)
+pygame.display.set_caption("Hangman Two Game")
+menu_font = pygame.font.Font("freesansbold.ttf", 32)
+title_font = pygame.font.Font("freesansbold.ttf", 52)
 btn_sound = pygame.mixer.Sound("mixkit-light-spell-873.wav")
+game_music = pygame.mixer.Sound("Industry And Technology.mp3")
 image = pygame.image.load("hangman1.svg")
 hangman_image = pygame.transform.scale(image, IMAGE_SIZE)
 guessed_letters = set()
 
-# attempts_left = 6
-
-
-# Load word list (you can replace this with your own list)
-# word_list = [ "The Hulk", "Spiderman", "The Avengers", "Iron Man", "Captain America",
-#         "Thor", "Loki", "Black Widow", "Hawk Eye", "The Red Skull", "Thanos",
-#         "Scarlett Witch", "Vison", "Zemo", "Green Goblin", "The Jackal",
-#         "Fantastic Four", "The Thing", "Silver Surfer",
-#         "Guardians of the Galaxy", "Nick Fury", "Shield", "Vulture",
-#         "Doctor Octopus", "Venom", "The Punisher", "Blade", "Magneto",
-#         "Wolverine", "Cyclops", "Jean Grey", "Beast", "Iron Fist", "Luke Cage",
-#         "Dare Devil", "Scorpion", "Black Panther", "Wakanda",
-#         "Stark Enterprise", "Tony Stark", "Power man", "Abomination",
-#         "Carnage", "I am Groot", "Avengers Assemble", "War Machine",
-#         "Mister Fantasic", "Invisible Woman", "The Human Torch", "Venom",
-#         "Scarlet Witch", "The Fantastic Four", "The Mandarin", "The Wasp",
-#         "Wolverine", "Cyclops", "Jean Grey", "Beast", "Luke Cage",
-#         "Dare Devil", "Sand man", "Beast", "Silver Surfer", "Captain Marvel",
-#         "Venom", "Magneto", "Night Crawler", "Madame Web", "Carnage",
-#         "King pin", "Doctor Octopus", "The Lizard", " She Hulk"
-#         ]
 
 selected_cat = "Marvel"
+
+category_list = ["Marvel", "NBA", "Artists", "Smikle Family"]
 
 
 word_dict = {
@@ -96,6 +79,12 @@ word_dict = {
         "Jaylen Brown", "Anthony Davis", "Jimmy Butler", "James Harden",
         "Jimmy Butler", "Shaquille O'Neal", "Kyrie Irving", "Zion Williamson",
         "Ja Morant"
+    ],
+    "Smikle Family": [
+        "Jermaine", "Denise", "Zaya", "Sharon", "Denise", "Carl Smikle", 
+        "Naomi Brady", "Ingrid", "Twyla", "Denver", "Jose Lopez", "Roderick", "Jazmine"
+        
+        
     ]
 }
 # chosen_word = random.choice(word_list).upper()
@@ -202,16 +191,36 @@ def selectCategory():
             if event.type == pygame.QUIT:
                 pygame.quit()
                 sys.exit()
+                
+        # btn_x = 500
+        # btn_y = 150
         
         marvel_btn = Button("Marvel", GREEN, (300, 150))
         marvel_btn.draw()
-        artist_btn = Button("Artists", GREEN, (300, 350))
-        artist_btn.draw()
         nba_btn = Button("NBA", GREEN, (300, 250))
         nba_btn.draw()
+        artist_btn = Button("Artists", GREEN, (300, 350))
+        artist_btn.draw()
+        family_btn = Button("Smikle Fam", GREEN, (300, 450))
+        family_btn.draw()
         
+        # btn_list = []
+        
+        # for cat_name in category_list:
+        #     cat_btn = Button(cat_name, GREEN, (btn_x, btn_y))
+        #     cat_btn.draw()
+        #     btn_list.append(cat_btn)
+        #     btn_y +=100
+            
         pygame.display.flip()
         
+        
+        # for category_btn in btn_list:
+        #     if category_btn.checkClicked():
+        #         selected_cat = category_btn.text
+        #         print(selected_cat)
+        #         break
+
         if marvel_btn.checkClicked():
             selected_cat = "Marvel"
             break
@@ -220,6 +229,9 @@ def selectCategory():
             break
         if nba_btn.checkClicked():
             selected_cat = "NBA"
+            break
+        if family_btn.checkClicked():
+            selected_cat = "Smikle Family"
             break
             
 
@@ -243,13 +255,17 @@ def mainMenu():
             if event.type == pygame.QUIT:
                 pygame.quit()
                 sys.exit()
+                
+        title_surface = title_font.render("HANGMAN", True, PURPLE)
+        screen.blit(title_surface, (SCREEN_WIDTH //2 - title_surface.get_width()//2, 50))      
+        
         
         menu_x = 300
         menu_y = SCREEN_HEIGHT//2
-        new_game = Button("New Game", GREEN, (menu_x, menu_y))
+        new_game = Button("New Game", GREEN, (menu_x - 150, menu_y))
         new_game.draw()
         
-        exit_btn = Button("Exit", RED, (menu_x, menu_y + 100))
+        exit_btn = Button("Exit", RED, (menu_x + 200, menu_y))
         exit_btn.draw()
 
         pygame.display.flip()
@@ -325,12 +341,12 @@ def playGame(chosen_word, attempts_left, selected_cat):
             running = False
 
 
+
+game_music.play()
 mainMenu()
-# playGame()
-# selectCategory()
 
 # Wait for a moment before quitting
-pygame.time.delay(2000)
+# pygame.time.delay(2000)
 
 # Clean up and exit
 pygame.quit()
