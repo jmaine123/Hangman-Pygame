@@ -78,12 +78,12 @@ word_dict = {
         "Portland Trail Blazers", "Brooklyn Nets", "Jayson Tatum",
         "Jaylen Brown", "Anthony Davis", "Jimmy Butler", "James Harden",
         "Jimmy Butler", "Shaquille O'Neal", "Kyrie Irving", "Zion Williamson",
-        "Ja Morant"
+        "Ja Morant", "Scottie Pippen"
     ],
     "Smikle Family": [
         "Jermaine", "Denise", "Zaya", "Sharon", "Denise", "Carl Smikle", 
-        "Naomi Brady", "Ingrid", "Twyla", "Denver", "Jose Lopez", "Roderick", "Jazmine"
-        
+        "Naomi Brady", "Ingrid", "Twyla", "Denver", "Jose Lopez", "Roderick", "Jazmine", "Charise", "Dori",
+        "Madison"  
         
     ]
 }
@@ -154,6 +154,12 @@ def configBoard(category):
     return chosen_word
 
 
+def resetGame():
+    global guessed_letters
+    guessed_letters = set()
+    
+
+
 def swapLetters(chosen_word):
     board = []
     for letter in chosen_word:
@@ -201,7 +207,7 @@ def selectCategory():
         nba_btn.draw()
         artist_btn = Button("Artists", GREEN, (300, 350))
         artist_btn.draw()
-        family_btn = Button("Smikle Fam", GREEN, (300, 450))
+        family_btn = Button("Family", GREEN, (300, 450))
         family_btn.draw()
         
         # btn_list = []
@@ -338,7 +344,11 @@ def playGame(chosen_word, attempts_left, selected_cat):
         
         # Check for game over conditions
         if attempts_left == 0 or " __ " not in display_word:
-            running = False
+            pygame.time.delay(3000)
+            resetGame()
+            new_word = configBoard(selected_cat)
+            playGame(new_word, attempts_left=6, selected_cat=selected_cat)
+            # running = False
 
 
 
