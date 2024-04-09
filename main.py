@@ -5,6 +5,7 @@ import pygame, sys, random
 
 FPS = 60
 pygame.init()
+pygame.mixer.init
 SCREEN_WIDTH = 900
 SCREEN_HEIGHT = 600
 PURPLE = (51, 0, 204)
@@ -23,9 +24,11 @@ IMAGE_PADDING = 10
 screen = pygame.display.set_mode((SCREEN_WIDTH, SCREEN_HEIGHT))
 pygame.display.set_caption('Hangman Two Game')
 menu_font = pygame.font.Font('freesansbold.ttf', 32)
+btn_sound = pygame.mixer.Sound("mixkit-light-spell-873.wav")
 image = pygame.image.load("hangman1.svg")
 hangman_image = pygame.transform.scale(image, IMAGE_SIZE)
 guessed_letters = set()
+
 # attempts_left = 6
 
 
@@ -121,6 +124,7 @@ class Button:
         mouse_click = pygame.mouse.get_pressed()
         if self.button.collidepoint(mouse_pos):
             if mouse_click[0] == 1 and self.clicked == False:
+                btn_sound.play()
                 self.clicked = True
                 return True
         if mouse_click[0] == 0:
@@ -258,9 +262,11 @@ def mainMenu():
             attempts_left = 6
             playGame(chosen_word, attempts_left, selected_cat)
             pygame.time.delay(3000)
+            
         if exit_btn.checkClicked():
             running = False
             pygame.quit()
+            sys.exit()
             
         
             
