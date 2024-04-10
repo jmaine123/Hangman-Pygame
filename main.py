@@ -15,10 +15,12 @@ GREEN = (0, 255, 0)
 YELLOW = (255, 223, 0)
 RED = (255,0,0)
 FONT_SIZE = 34
+SMALL_FONT_SIZE = 23
 BIG_FONT_SIZE = 50
 IMAGE_SIZE = (200, 200)
 IMAGE_PADDING = 10
 
+print(pygame.font.get_fonts())
 
 #game variables
 screen = pygame.display.set_mode((SCREEN_WIDTH, SCREEN_HEIGHT))
@@ -27,14 +29,28 @@ menu_font = pygame.font.Font("freesansbold.ttf", 32)
 title_font = pygame.font.Font("freesansbold.ttf", 52)
 btn_sound = pygame.mixer.Sound("mixkit-light-spell-873.wav")
 game_music = pygame.mixer.Sound("Industry And Technology.mp3")
-image = pygame.image.load("hangman1.svg")
-hangman_image = pygame.transform.scale(image, IMAGE_SIZE)
+correct_sound = pygame.mixer.Sound("game-sound-correct.wav")
+wrong_sound = pygame.mixer.Sound("game-sound-wrong.wav")
+cheer_sound = pygame.mixer.Sound("crowd-cheer.wav")
 guessed_letters = set()
+# image = pygame.image.load("hangman7.svg")
+# hangman_image = pygame.transform.scale(image, IMAGE_SIZE)
+# attempts_left = 6
 
+hangman_list = []
 
+for i in range(0,7):
+    img_path = "hangman" + str(i) + ".png"
+    image = pygame.image.load(img_path)
+    img_scaled = pygame.transform.scale(image, IMAGE_SIZE)
+    hangman_list.append(img_scaled)
+    
+    
+
+    
 selected_cat = "Marvel"
 
-category_list = ["Marvel", "NBA", "Artists", "Smikle Family"]
+category_list = ["Marvel", "NBA", "Artists", "Smikle Family", "Zaya's Friends"]
 
 
 word_dict = {
@@ -49,12 +65,12 @@ word_dict = {
         "Dare Devil", "Scorpion", "Black Panther", "Wakanda",
         "Stark Enterprise", "Tony Stark", "Power man", "Abomination",
         "Carnage", "I am Groot", "Avengers Assemble", "War Machine",
-        "Mister Fantasic", "Invisible Woman", "The Human Torch", "Venom",
+        "Mister Fantastic", "Invisible Woman", "The Human Torch", "Venom",
         "Scarlet Witch", "The Fantastic Four", "The Mandarin", "The Wasp",
         "Wolverine", "Cyclops", "Jean Grey", "Beast", "Luke Cage",
         "Dare Devil", "Sand man", "Beast", "Silver Surfer", "Captain Marvel",
         "Venom", "Magneto", "Night Crawler", "Madame Web", "Carnage",
-        "King pin", "Doctor Octopus", "The Lizard", " She Hulk"
+        "King pin", "Doctor Octopus", "The Lizard", " She Hulk", "Doctor Doom"
     ],
     "Artists": [
         "Jay Z", "Queen Latifah", "DMX", "Snoop Dogg", "Jadakiss", "J Cole",
@@ -83,7 +99,15 @@ word_dict = {
     "Smikle Family": [
         "Jermaine", "Denise", "Zaya", "Sharon", "Denise", "Carl Smikle", 
         "Naomi Brady", "Ingrid", "Twyla", "Denver", "Jose Lopez", "Roderick", "Jazmine", "Charise", "Dori",
-        "Madison"  
+        "Madison", "Uncle Dougie", "Samuel", "Kevin", "Franchesca", "Dozer"
+        
+    ],
+    "Zaya's Friends": [
+        "Zaya", "Bruce", "Leena", "Jose Jr", "Tommy", "Adrian", "Adam", "Leo", "Alex", "Zuri", "Zoe", "Liam",
+        "Ryan", "Pino", "Charlotte", "Alihan", "Aria", "victoria", "Filippo", "Julian", "Malakai", "Daniel", "Harish"
+        "Lucas", "Sahana", "Avyan", "Ellie", "Sophia", "Lillian", "Rowan", "Gianna", "Caroline", "Henry", "Drew", "Tyler"
+        "Claire", "Ayaan", "Ruhaani", "Ilia", "Ethan", "Eleanor", "Liberty", "Mila", "Viveca", "Liana", "Lael", "Nikisha", "David"
+        "Oona", "Marcella", "Madison", "Rosie", "Anastasia", "Zaire", "George", "Cristina"
         
     ]
 }
@@ -100,7 +124,6 @@ class Button:
         self.pos = pos
         self.button = pygame.rect.Rect(self.pos[0], self.pos[1], 200, 50)
         self.clicked = False
-        
         
     def draw(self):
         # menu_font = pygame.font.Font('freesansbold.ttf', 32)
@@ -133,13 +156,15 @@ def displayGameStatus(display_word, attempts_left, chosen_word):
         screen.fill("Black")
         game_status= chosen_losing_text + " the word was " + chosen_word
         font = pygame.font.Font(None, BIG_FONT_SIZE)
-        status_surface = font.render(game_status, True, PURPLE)
+        status_surface = font.render(game_status, True, WHITE)
         screen.blit(status_surface, (SCREEN_WIDTH // 2 - status_surface.get_width() // 2, SCREEN_HEIGHT / 2))
         pygame.display.flip()
 
 
     elif " __ " not in display_word:
         pygame.time.delay(2000)
+        cheer_sound.play()
+        # cheer_sound.fadeout(3)
         game_status = "You Won!!!"
         screen.fill(GREEN)
         font = pygame.font.Font(None, BIG_FONT_SIZE)
@@ -201,14 +226,16 @@ def selectCategory():
         # btn_x = 500
         # btn_y = 150
         
-        marvel_btn = Button("Marvel", GREEN, (300, 150))
+        marvel_btn = Button("Marvel", GREEN, (300, 50))
         marvel_btn.draw()
-        nba_btn = Button("NBA", GREEN, (300, 250))
+        nba_btn = Button("NBA", GREEN, (300, 150))
         nba_btn.draw()
-        artist_btn = Button("Artists", GREEN, (300, 350))
+        artist_btn = Button("Artists", GREEN, (300, 250))
         artist_btn.draw()
-        family_btn = Button("Family", GREEN, (300, 450))
+        family_btn = Button("Family", GREEN, (300, 350))
         family_btn.draw()
+        zaya_friends_btn = Button("Zaya Friends", GREEN, (300, 450))
+        zaya_friends_btn.draw()
         
         # btn_list = []
         
@@ -238,6 +265,9 @@ def selectCategory():
             break
         if family_btn.checkClicked():
             selected_cat = "Smikle Family"
+            break
+        if zaya_friends_btn.checkClicked():
+            selected_cat = "Zaya's Friends"
             break
             
 
@@ -309,16 +339,23 @@ def playGame(chosen_word, attempts_left, selected_cat):
                 pygame.quit()
                 sys.exit()
 
-        
+        cheer_sound.fadeout(1)
             
         screen.fill(PURPLE)
-        # Draw the word with underscores for unguessed letters
-        # display_word = "".join([letter + " " if letter in guessed_letters else " __ " for letter in chosen_word])
+        
         display_word = swapLetters(chosen_word)
         font = pygame.font.Font(None, FONT_SIZE)
+        small_font = pygame.font.Font(None, SMALL_FONT_SIZE)
         text_surface = font.render(display_word, True, WHITE)
         moves_left = font.render(str(attempts_left), True, WHITE)
         cat_text = font.render(selected_cat, True, WHITE)
+        menu_btn = Button("MAIN MENU", GREEN, (600, 550))
+        menu_btn.rect = pygame.rect.Rect(600, 500, 100, 25)
+        menu_btn.draw()
+        hangman_image = hangman_list[attempts_left]
+        
+        if menu_btn.checkClicked():
+            return False
         # screen.blit(text_surface, (SCREEN_WIDTH // 2 - text_surface.get_width() // 2, SCREEN_HEIGHT / 2))
         screen.blit(text_surface, (IMAGE_PADDING + hangman_image.get_width() + 50, SCREEN_HEIGHT / 2))
         screen.blit(hangman_image, (IMAGE_PADDING, 200))
@@ -333,7 +370,10 @@ def playGame(chosen_word, attempts_left, selected_cat):
                 if letter not in guessed_letters:
                     guessed_letters.add(letter)
                     if letter not in chosen_word:
+                        wrong_sound.play()
                         attempts_left -= 1
+                    else:
+                        correct_sound.play()
         
         drawGuessLetters(chosen_word)
                         
@@ -352,7 +392,7 @@ def playGame(chosen_word, attempts_left, selected_cat):
 
 
 
-game_music.play()
+game_music.play(-1)
 mainMenu()
 
 # Wait for a moment before quitting
