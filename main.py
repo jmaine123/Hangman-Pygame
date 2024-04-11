@@ -16,19 +16,25 @@ WHITE = (255, 255, 255)
 GREEN = (0, 255, 0)
 YELLOW = (255, 223, 0)
 RED = (255,0,0)
-FONT_SIZE = 34
-SMALL_FONT_SIZE = 23
+FONT_SIZE = 36
+SMALL_FONT_SIZE = 25
+SUPER_SMALL_FONT = 20
 BIG_FONT_SIZE = 50
 IMAGE_SIZE = (200, 200)
 IMAGE_PADDING = 10
+MAIN_MENU_BTN_WIDTH = 200
+MAIN_MENU_BTN_HEIGHT = 50
 
-print(pygame.font.get_fonts())
+# print(pygame.font.get_fonts())
 
 #game variables
 screen = pygame.display.set_mode((SCREEN_WIDTH, SCREEN_HEIGHT))
 pygame.display.set_caption("Hangman Two Game")
 menu_font = pygame.font.SysFont("skia", 32)
-title_font = pygame.font.SysFont("skia", 52, bold=True)
+title_font = pygame.font.SysFont("skia", 62, bold=True)
+plain_font = pygame.font.SysFont("skia", FONT_SIZE, bold=True)
+smaller_plain_font = pygame.font.SysFont("skia", SMALL_FONT_SIZE, bold=True)
+super_small_text = pygame.font.SysFont("skia", SUPER_SMALL_FONT, bold=True)
 btn_sound = pygame.mixer.Sound("mixkit-light-spell-873.wav")
 game_music = pygame.mixer.Sound("Industry And Technology.mp3")
 correct_sound = pygame.mixer.Sound("game-sound-correct.wav")
@@ -36,6 +42,7 @@ full_correct_sound = pygame.mixer.Sound("correct-2.wav")
 wrong_sound = pygame.mixer.Sound("game-sound-wrong.wav")
 cheer_sound = pygame.mixer.Sound("crowd-cheer.wav")
 guessed_letters = set()
+non_letters = ["!", ".", "'", "?", ",", "&", ":"]
 title_update = True
 
 
@@ -53,7 +60,7 @@ for i in range(0,7):
     
 selected_cat = "Marvel"
 
-category_list = ["Marvel", "NBA", "Artists", "Smikle Family", "Zaya's Friends"]
+category_list = ["Marvel", "NBA", "Artists", "Smikle Family", "Zaya's Friends", "Grandma's Phrases"]
 
 
 word_dict = {
@@ -112,6 +119,13 @@ word_dict = {
         "Claire", "Ayaan", "Ruhaani", "Ilia", "Ethan", "Eleanor", "Liberty", "Mila", "Viveca", "Liana", "Lael", "Nikisha", "David"
         "Oona", "Marcella", "Madison", "Rosie", "Anastasia", "Zaire", "George", "Cristina"
         
+    ],
+        "Grandma's Phrases": [
+            "Don't bother me", "Your head side!", "Those that don't hear, feel", "Get Lost", "What kind of weather is it outside?",
+            "I am not a Senior Citizen!", "Get the hell of my phone!", "I am not cooking!", "I have a doctor appointment tomorrow", "Pick up my prescription at CVS",
+            "Keep it Down!", "Never treat somebody better than how they treat you", "Alexa! Play Beres Hammond", "Not enough food in the soup!",
+            "Its too salty"
+        
     ]
 }
 # chosen_word = random.choice(word_list).upper()
@@ -121,18 +135,20 @@ word_dict = {
 
 
 class Button:
-    def __init__(self, txt, color, pos):
+    def __init__(self, txt, color, pos, width, height):
         self.text = txt
         self.color = color
         self.pos = pos
-        self.button = pygame.rect.Rect(self.pos[0], self.pos[1], 200, 50)
+        self.height = height
+        self.width = width
+        self.button = pygame.rect.Rect(self.pos[0], self.pos[1], self.width, self.height)
         self.clicked = False
         
     def draw(self):
         # menu_font = pygame.font.Font('freesansbold.ttf', 32)
         text = menu_font.render(self.text, True, BLACK)
         pygame.draw.rect(screen, self.color, self.button)
-        screen.blit(text, ( self.pos[0] + 10, self.pos[1]+ 10))
+        screen.blit(text, (self.pos[0] + 10, self.pos[1]+ 10))
     
     def checkClicked(self):
         mouse_pos = pygame.mouse.get_pos()
@@ -192,7 +208,7 @@ def resetGame():
 def swapLetters(chosen_word):
     board = []
     for letter in chosen_word:
-        if letter in guessed_letters:
+        if letter in guessed_letters or letter in non_letters:
             board.append(letter + " ")
         elif letter == " ":
             board.append("    ")
@@ -214,7 +230,7 @@ def draw_hangman_title():
             screen.blit(title_surf, (SCREEN_WIDTH //2 - title_surf.get_width()//2, 50)) 
             correct_sound.play()       
             pygame.display.update()
-            pygame.time.wait(400)
+            pygame.time.wait(500)
             
             if title == "H A N G M A N":
                 full_correct_sound.play()
@@ -226,7 +242,7 @@ def draw_hangman_title():
 
 def drawGuessLetters(chosen_word):
     font = pygame.font.Font(None, FONT_SIZE)
-    guessed_msg = font.render("Guessed Letters: ", True, WHITE)
+    guessed_msg = plain_font.render("Guessed Letters: ", True, WHITE)
     screen.blit(guessed_msg, (0, 550))
     first_ltr_x = guessed_msg.get_width() + 10
     for ltr in guessed_letters:
@@ -253,16 +269,18 @@ def selectCategory():
         # btn_x = 500
         # btn_y = 150
         
-        marvel_btn = Button("Marvel", GREEN, (300, 50))
+        marvel_btn = Button("Marvel", GREEN, (300, 50), 120, 50)
         marvel_btn.draw()
-        nba_btn = Button("NBA", GREEN, (300, 150))
+        nba_btn = Button("NBA", GREEN, (300, 150), 100, 50)
         nba_btn.draw()
-        artist_btn = Button("Artists", GREEN, (300, 250))
+        artist_btn = Button("Artists", GREEN, (300, 250), 120, 50)
         artist_btn.draw()
-        family_btn = Button("Family", GREEN, (300, 350))
+        family_btn = Button("Family", GREEN, (300, 350), 120, 50)
         family_btn.draw()
-        zaya_friends_btn = Button("Zaya Friends", GREEN, (300, 450))
+        zaya_friends_btn = Button("Zaya Friends", GREEN, (300, 450), 200, 50)
         zaya_friends_btn.draw()
+        grandma_btn = Button("Grandma's Phrases", GREEN, (500, 50), 300, 50)
+        grandma_btn.draw()
         
         # btn_list = []
         
@@ -295,6 +313,9 @@ def selectCategory():
             break
         if zaya_friends_btn.checkClicked():
             selected_cat = "Zaya's Friends"
+            break
+        if grandma_btn.checkClicked():
+            selected_cat = "Grandma's Phrases"
             break
             
 
@@ -330,10 +351,10 @@ def mainMenu():
         
         menu_x = 300
         menu_y = SCREEN_HEIGHT//2
-        new_game = Button("New Game", GREEN, (menu_x - 100, menu_y))
+        new_game = Button("New Game", GREEN, (menu_x - 100, menu_y), 200, 50)
         new_game.draw()
         
-        exit_btn = Button("Exit", RED, (menu_x + 250, menu_y))
+        exit_btn = Button("Exit", RED, (menu_x + 250, menu_y), 200, 50)
         exit_btn.draw()
 
         pygame.display.flip()
@@ -376,12 +397,18 @@ def playGame(chosen_word, attempts_left, selected_cat):
         screen.fill(PURPLE)
         
         display_word = swapLetters(chosen_word)
-        font = pygame.font.Font(None, FONT_SIZE)
-        small_font = pygame.font.Font(None, SMALL_FONT_SIZE)
-        text_surface = font.render(display_word, True, WHITE)
-        moves_left = font.render(str(attempts_left), True, WHITE)
-        cat_text = font.render(selected_cat, True, WHITE)
-        menu_btn = Button("MAIN MENU", GREEN, (600, 550))
+        # font = pygame.font.Font(None, FONT_SIZE)
+        # small_font = pygame.font.Font(None, SMALL_FONT_SIZE)
+        if len(chosen_word) > 20: 
+            text_surface = super_small_text.render(display_word, True, WHITE)
+        elif len(chosen_word) > 10:
+            text_surface = smaller_plain_font.render(display_word, True, WHITE)
+        else:
+            text_surface = plain_font.render(display_word, True, WHITE)
+
+        moves_left = plain_font.render(str(attempts_left), True, WHITE)
+        cat_text = plain_font.render(selected_cat, True, WHITE)
+        menu_btn = Button("MAIN MENU", GREEN, (600, 550), 200, 50)
         menu_btn.rect = pygame.rect.Rect(600, 500, 100, 25)
         menu_btn.draw()
         hangman_image = hangman_list[attempts_left]
