@@ -3,10 +3,12 @@ import pygame, sys, random
 # from pygame.locals import *
 # from timeit import default_timer as timer
 
+
+#Game Settings
 FPS = 60
 pygame.init()
 pygame.mixer.init
-SCREEN_WIDTH = 900
+SCREEN_WIDTH = 1000
 SCREEN_HEIGHT = 600
 PURPLE = (51, 0, 204)
 BLACK = (0, 0, 0)
@@ -25,23 +27,24 @@ print(pygame.font.get_fonts())
 #game variables
 screen = pygame.display.set_mode((SCREEN_WIDTH, SCREEN_HEIGHT))
 pygame.display.set_caption("Hangman Two Game")
-menu_font = pygame.font.Font("freesansbold.ttf", 32)
-title_font = pygame.font.Font("freesansbold.ttf", 52)
+menu_font = pygame.font.SysFont("skia", 32)
+title_font = pygame.font.SysFont("skia", 52, bold=True)
 btn_sound = pygame.mixer.Sound("mixkit-light-spell-873.wav")
 game_music = pygame.mixer.Sound("Industry And Technology.mp3")
 correct_sound = pygame.mixer.Sound("game-sound-correct.wav")
+full_correct_sound = pygame.mixer.Sound("correct-2.wav") 
 wrong_sound = pygame.mixer.Sound("game-sound-wrong.wav")
 cheer_sound = pygame.mixer.Sound("crowd-cheer.wav")
 guessed_letters = set()
-# image = pygame.image.load("hangman7.svg")
-# hangman_image = pygame.transform.scale(image, IMAGE_SIZE)
-# attempts_left = 6
+title_update = True
+
 
 hangman_list = []
 
+# load and add hangman images to list
 for i in range(0,7):
     img_path = "hangman" + str(i) + ".png"
-    image = pygame.image.load(img_path)
+    image = pygame.image.load(img_path).convert()
     img_scaled = pygame.transform.scale(image, IMAGE_SIZE)
     hangman_list.append(img_scaled)
     
@@ -162,6 +165,7 @@ def displayGameStatus(display_word, attempts_left, chosen_word):
 
 
     elif " __ " not in display_word:
+        full_correct_sound.play()
         pygame.time.delay(2000)
         cheer_sound.play()
         # cheer_sound.fadeout(3)
@@ -195,6 +199,29 @@ def swapLetters(chosen_word):
         else:
             board.append(" __ ")
     return "".join(board)
+
+
+
+def draw_hangman_title():
+    hangman_titles = ["_ _ _ _ _ _ _", "_ _ _ G _ _ _", "_ _ _ G M _ _","_ _ N G M _ N", "_ A N G M A N", "H A N G M A N"]
+    
+    global title_update
+    
+    while title_update:
+        for title in hangman_titles:
+            screen.fill(YELLOW)
+            title_surf = title_font.render(title, True, PURPLE)
+            screen.blit(title_surf, (SCREEN_WIDTH //2 - title_surf.get_width()//2, 50)) 
+            correct_sound.play()       
+            pygame.display.update()
+            pygame.time.wait(400)
+            
+            if title == "H A N G M A N":
+                full_correct_sound.play()
+                title_update = False
+    
+
+
 
 
 def drawGuessLetters(chosen_word):
@@ -286,22 +313,27 @@ def mainMenu():
         pos = pygame.mouse.get_pos()
         click = pygame.mouse.get_pressed()
         screen.fill(YELLOW)
+
         
         for event in pygame.event.get():
             if event.type == pygame.QUIT:
                 pygame.quit()
                 sys.exit()
                 
-        title_surface = title_font.render("HANGMAN", True, PURPLE)
-        screen.blit(title_surface, (SCREEN_WIDTH //2 - title_surface.get_width()//2, 50))      
         
+        #draw main title letter by letter animaton
+        
+        draw_hangman_title()      
+        
+        title_surface = title_font.render("H A N G M A N", True, PURPLE)
+        screen.blit(title_surface, (SCREEN_WIDTH //2 - title_surface.get_width()//2, 50))
         
         menu_x = 300
         menu_y = SCREEN_HEIGHT//2
-        new_game = Button("New Game", GREEN, (menu_x - 150, menu_y))
+        new_game = Button("New Game", GREEN, (menu_x - 100, menu_y))
         new_game.draw()
         
-        exit_btn = Button("Exit", RED, (menu_x + 200, menu_y))
+        exit_btn = Button("Exit", RED, (menu_x + 250, menu_y))
         exit_btn.draw()
 
         pygame.display.flip()
@@ -355,6 +387,8 @@ def playGame(chosen_word, attempts_left, selected_cat):
         hangman_image = hangman_list[attempts_left]
         
         if menu_btn.checkClicked():
+            global title_update
+            title_update = True
             return False
         # screen.blit(text_surface, (SCREEN_WIDTH // 2 - text_surface.get_width() // 2, SCREEN_HEIGHT / 2))
         screen.blit(text_surface, (IMAGE_PADDING + hangman_image.get_width() + 50, SCREEN_HEIGHT / 2))
