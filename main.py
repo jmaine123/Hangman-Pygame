@@ -1,7 +1,6 @@
 import pygame, sys, random
-# from time import sleep
-# from pygame.locals import *
-# from timeit import default_timer as timer
+import os, sys, ast
+
 
 
 #Game Settings
@@ -41,6 +40,7 @@ correct_sound = pygame.mixer.Sound("game-sound-correct.wav")
 full_correct_sound = pygame.mixer.Sound("correct-2.wav") 
 wrong_sound = pygame.mixer.Sound("game-sound-wrong.wav")
 cheer_sound = pygame.mixer.Sound("crowd-cheer.wav")
+crowd_booing = pygame.mixer.Sound("crowdbooing_01.wav")
 guessed_letters = set()
 non_letters = ["!", ".", "'", "?", ",", "&", ":"]
 title_update = True
@@ -57,78 +57,98 @@ for i in range(0,7):
     
     
 
+
+
+with open("/Users/user/Desktop/Code_Games/Hangman/words.py") as f:
+    data = f.read()
+    word_dict = ast.literal_eval(data)
+    
+# print(word_dict)
+category_list = word_dict.keys()
+print(category_list)
     
 selected_cat = "Marvel"
 
-category_list = ["Marvel", "NBA", "Artists", "Smikle Family", "Zaya's Friends", "Grandma's Phrases"]
 
 
-word_dict = {
-    "Marvel": [
-        "The Hulk", "Spiderman", "The Avengers", "Iron Man", "Captain America",
-        "Thor", "Loki", "Black Widow", "Hawk Eye", "The Red Skull", "Thanos",
-        "Scarlett Witch", "Vison", "Zemo", "Green Goblin", "The Jackal",
-        "Fantastic Four", "The Thing", "Silver Surfer",
-        "Guardians of the Galaxy", "Nick Fury", "Shield", "Vulture",
-        "Doctor Octopus", "Venom", "The Punisher", "Blade", "Magneto",
-        "Wolverine", "Cyclops", "Jean Grey", "Beast", "Iron Fist", "Luke Cage",
-        "Dare Devil", "Scorpion", "Black Panther", "Wakanda",
-        "Stark Enterprise", "Tony Stark", "Power man", "Abomination",
-        "Carnage", "I am Groot", "Avengers Assemble", "War Machine",
-        "Mister Fantastic", "Invisible Woman", "The Human Torch", "Venom",
-        "Scarlet Witch", "The Fantastic Four", "The Mandarin", "The Wasp",
-        "Wolverine", "Cyclops", "Jean Grey", "Beast", "Luke Cage",
-        "Dare Devil", "Sand man", "Beast", "Silver Surfer", "Captain Marvel",
-        "Venom", "Magneto", "Night Crawler", "Madame Web", "Carnage",
-        "King pin", "Doctor Octopus", "The Lizard", " She Hulk", "Doctor Doom"
-    ],
-    "Artists": [
-        "Jay Z", "Queen Latifah", "DMX", "Snoop Dogg", "Jadakiss", "J Cole",
-        "Jermaine Dupri", "Alicia Keys", "John Legend", "Lil Jon", "Lil Kim",
-        "Diddy", "Tupac", "Lil Wayne", "Beastie Boyz", "Ying Yang Twins",
-        "Drake", "Cash Money", "Ruff Ryders", "Bad Boy Entertainment",
-        "Nicki Minaj", "Bryson Tiller", "Torey Lanez", "Summer Walker",
-        "Usher", "Cardi B", "DMX", "Meg The Stallion", "Chris Brown",
-        "Rihanna", "The Fugees", "Aretha Franklin", "Jay Rock", "Kanye West",
-        "Kendrick Lamar", "Kid Cudi", "James Brown", "Michael Jackson"
-    ],
-    "NBA": [
-        "LeBron James", "Carmelo Anthony", "Michael Jordan", "Kobe Bryant",
-        "Tim Duncan", "Kevin Garnet", "Russell Westbrook", "Pick and Roll",
-        "New York Knicks", "Los angeles Lakers", " Los Angeles Clippers",
-        "New Orlean Pelicans", "Charlotte Hornets", "Golden State Warriors",
-        "Sacremento Kings", "Toronto Raptors", "Stephen Curry", "Kevin Durant",
-        "Kyrie Irving", "Kawhi Leonard", "Boston Celtics", "Miami Heat",
-        "Magic Johnson", "Houston Rockets", "Chicago Bulls",
-        "Oklahoma City Thunder", "Denver Nuggets", "Dallas Mavericks",
-        "Portland Trail Blazers", "Brooklyn Nets", "Jayson Tatum",
-        "Jaylen Brown", "Anthony Davis", "Jimmy Butler", "James Harden",
-        "Jimmy Butler", "Shaquille O'Neal", "Kyrie Irving", "Zion Williamson",
-        "Ja Morant", "Scottie Pippen"
-    ],
-    "Smikle Family": [
-        "Jermaine", "Denise", "Zaya", "Sharon", "Denise", "Carl Smikle", 
-        "Naomi Brady", "Ingrid", "Twyla", "Denver", "Jose Lopez", "Roderick", "Jazmine", "Charise", "Dori",
-        "Madison", "Uncle Dougie", "Samuel", "Kevin", "Franchesca", "Dozer"
+
+# word_dict = {
+#     "Marvel": [
+#         "The Hulk", "Spiderman", "The Avengers", "Iron Man", "Captain America",
+#         "Thor", "Loki", "Black Widow", "Hawk Eye", "The Red Skull", "Thanos",
+#         "Scarlett Witch", "Vison", "Zemo", "Green Goblin", "The Jackal",
+#         "Fantastic Four", "The Thing", "Silver Surfer",
+#         "Guardians of the Galaxy", "Nick Fury", "Shield", "Vulture",
+#         "Doctor Octopus", "Venom", "The Punisher", "Blade", "Magneto",
+#         "Wolverine", "Cyclops", "Jean Grey", "Beast", "Iron Fist", "Luke Cage",
+#         "Dare Devil", "Scorpion", "Black Panther", "Wakanda",
+#         "Stark Enterprise", "Tony Stark", "Power man", "Abomination",
+#         "Carnage", "I am Groot", "Avengers Assemble", "War Machine",
+#         "Mister Fantastic", "Invisible Woman", "The Human Torch", "Venom",
+#         "Scarlet Witch", "The Fantastic Four", "The Mandarin", "The Wasp",
+#         "Wolverine", "Cyclops", "Jean Grey", "Beast", "Luke Cage",
+#         "Dare Devil", "Sand man", "Beast", "Silver Surfer", "Captain Marvel",
+#         "Venom", "Magneto", "Night Crawler", "Madame Web", "Carnage",
+#         "King pin", "Doctor Octopus", "The Lizard", " She Hulk", "Doctor Doom"
+#     ],
+#     "Artists": [
+#         "Jay Z", "Queen Latifah", "DMX", "Snoop Dogg", "Jadakiss", "J Cole",
+#         "Jermaine Dupri", "Alicia Keys", "John Legend", "Lil Jon", "Lil Kim",
+#         "Diddy", "Tupac", "Lil Wayne", "Beastie Boyz", "Ying Yang Twins",
+#         "Drake", "Cash Money", "Ruff Ryders", "Bad Boy Entertainment",
+#         "Nicki Minaj", "Bryson Tiller", "Torey Lanez", "Summer Walker",
+#         "Usher", "Cardi B", "DMX", "Meg The Stallion", "Chris Brown",
+#         "Rihanna", "The Fugees", "Aretha Franklin", "Jay Rock", "Kanye West",
+#         "Kendrick Lamar", "Kid Cudi", "James Brown", "Michael Jackson", "Drake", "Kendrick Lamar",
+#         "Madonna", "Britney Spears", "Billie Eillish", "Bob Marley", "Jay - Z", "Beyonce", "Destiny Childs"
+#     ],
+#     "NBA": [
+#         "LeBron James", "Carmelo Anthony", "Michael Jordan", "Kobe Bryant",
+#         "Tim Duncan", "Kevin Garnet", "Russell Westbrook", "Pick and Roll",
+#         "New York Knicks", "Los angeles Lakers", " Los Angeles Clippers",
+#         "New Orlean Pelicans", "Charlotte Hornets", "Golden State Warriors",
+#         "Sacremento Kings", "Toronto Raptors", "Stephen Curry", "Kevin Durant",
+#         "Kyrie Irving", "Kawhi Leonard", "Boston Celtics", "Miami Heat",
+#         "Magic Johnson", "Houston Rockets", "Chicago Bulls",
+#         "Oklahoma City Thunder", "Denver Nuggets", "Dallas Mavericks",
+#         "Portland Trail Blazers", "Brooklyn Nets", "Jayson Tatum",
+#         "Jaylen Brown", "Anthony Davis", "Jimmy Butler", "James Harden",
+#         "Jimmy Butler", "Shaquille O'Neal", "Kyrie Irving", "Zion Williamson",
+#         "Ja Morant", "Scottie Pippen", "Jalen Brunson", "Julius Randle", "Stephen A Smith", "Philadelphia Sixers",
+#         "Tracey McGrady", "Vince Carter", "Patrick Ewing", "Yao Ming", "Miami Heat", "Indiana Pacers", "Orlando Magic",
+#         "Doc Rivers"
+#     ],
+#     "Smikle Family": [
+#         "Jermaine", "Denise", "Zaya", "Sharon", "Denise", "Carl Smikle", 
+#         "Naomi Brady", "Ingrid", "Twyla", "Denver", "Jose Lopez", "Roderick", "Jazmine", "Charise", "Dori",
+#         "Madison", "Uncle Dougie", "Samuel", "Kevin", "Franchesca", "Dozer", "Miriam Smith", "Ephraim Brady", "Nerissa Lynch",
+#         "Caleb Smikle", "Uncle Peter", "Enez Brady", "John Brady"
         
-    ],
-    "Zaya's Friends": [
-        "Zaya", "Bruce", "Leena", "Jose Jr", "Tommy", "Adrian", "Adam", "Leo", "Alex", "Zuri", "Zoe", "Liam",
-        "Ryan", "Pino", "Charlotte", "Alihan", "Aria", "victoria", "Filippo", "Julian", "Malakai", "Daniel", "Harish"
-        "Lucas", "Sahana", "Avyan", "Ellie", "Sophia", "Lillian", "Rowan", "Gianna", "Caroline", "Henry", "Drew", "Tyler"
-        "Claire", "Ayaan", "Ruhaani", "Ilia", "Ethan", "Eleanor", "Liberty", "Mila", "Viveca", "Liana", "Lael", "Nikisha", "David"
-        "Oona", "Marcella", "Madison", "Rosie", "Anastasia", "Zaire", "George", "Cristina"
+#     ],
+#     "Zaya's Friends": [
+#         "Zaya", "Bruce", "Leena", "Jose Jr", "Tommy", "Adrian", "Adam", "Leo", "Alex", "Zuri", "Zoe", "Liam",
+#         "Ryan", "Pino", "Charlotte", "Alihan", "Aria", "victoria", "Filippo", "Julian", "Malakai", "Daniel", "Harish"
+#         "Lucas", "Sahana", "Avyan", "Ellie", "Sophia", "Lillian", "Rowan", "Gianna", "Caroline", "Henry", "Drew", "Tyler"
+#         "Claire", "Ayaan", "Ruhaani", "Ilia", "Ethan", "Eleanor", "Liberty", "Mila", "Viveca", "Liana", "Lael", "Nikisha", "David"
+#         "Oona", "Marcella", "Madison", "Rosie", "Anastasia", "Zaire", "George", "Cristina"
         
-    ],
-        "Grandma's Phrases": [
-            "Don't bother me", "Your head side!", "Those that don't hear, feel", "Get Lost", "What kind of weather is it outside?",
-            "I am not a Senior Citizen!", "Get the hell of my phone!", "I am not cooking!", "I have a doctor appointment tomorrow", "Pick up my prescription at CVS",
-            "Keep it Down!", "Never treat somebody better than how they treat you", "Alexa! Play Beres Hammond", "Not enough food in the soup!",
-            "Its too salty"
+#     ],
+#         "Grandma's Phrases": [
+#             "Don't bother me", "Your head side!", "Those that don't hear, feel", "Get Lost", "What kind of weather is it outside?",
+#             "I am not a Senior Citizen!", "Get the hell of my phone!", "I am not cooking!", "I have a doctor appointment tomorrow", "Pick up my prescription at CVS",
+#             "Keep it Down!", "Never treat somebody better than how they treat you", "Alexa! Play Beres Hammond", "Not enough food in the soup!",
+#             "Its too salty", "I need to use the bathroom"
         
-    ]
-}
-# chosen_word = random.choice(word_list).upper()
+#     ],
+#         "Fruits": [
+#             "Apples", "Bananas", "Orange", "Pear", "Pineapple", "Grapes", "Mango", "Watermelon", "Cantalope", "Blackberry", "Blueberry"
+#             "Cherry", "Rasberry", "Cranberry", "Strawberry", "Honeydew", "Peach", "Coconut", "Plum", "Kiwi",
+#             "Key Lime", "Lemon", "Apricot", "Guava", "Tangerine", "Passion Fruit", "Grapefruit", "Pomegranate", "Avocado",
+#             "Dragon Fruit", "Papaya"
+        
+#     ]
+# }
+
 
 
 
@@ -171,7 +191,8 @@ def displayGameStatus(display_word, attempts_left, chosen_word):
     losing_text_options = ["Nice Try!!!", "Oh Sorry!!!", "Oh So Close!!!", "Try again", "Loser!!!!!"]
     chosen_losing_text = random.choice(losing_text_options).upper()
     if attempts_left == 0:
-        pygame.time.delay(2000)
+        pygame.time.delay(1000)
+        crowd_booing.play()
         screen.fill("Black")
         game_status= chosen_losing_text + " the word was " + chosen_word
         font = pygame.font.Font(None, BIG_FONT_SIZE)
@@ -281,23 +302,25 @@ def selectCategory():
         zaya_friends_btn.draw()
         grandma_btn = Button("Grandma's Phrases", GREEN, (500, 50), 300, 50)
         grandma_btn.draw()
+        fruit_btn = Button("Fruits", GREEN, (50, 50), 100, 50)
+        fruit_btn.draw()
         
         # btn_list = []
         
         # for cat_name in category_list:
-        #     cat_btn = Button(cat_name, GREEN, (btn_x, btn_y))
+        #     cat_btn = Button(cat_name, GREEN, (btn_x, btn_y), 200, 50)
         #     cat_btn.draw()
         #     btn_list.append(cat_btn)
         #     btn_y +=100
             
-        pygame.display.flip()
-        
-        
         # for category_btn in btn_list:
         #     if category_btn.checkClicked():
         #         selected_cat = category_btn.text
         #         print(selected_cat)
         #         break
+        pygame.display.flip()
+        
+        
 
         if marvel_btn.checkClicked():
             selected_cat = "Marvel"
@@ -316,6 +339,9 @@ def selectCategory():
             break
         if grandma_btn.checkClicked():
             selected_cat = "Grandma's Phrases"
+            break
+        if fruit_btn.checkClicked():
+            selected_cat = "Fruits"
             break
             
 
@@ -351,7 +377,7 @@ def mainMenu():
         
         menu_x = 300
         menu_y = SCREEN_HEIGHT//2
-        new_game = Button("New Game", GREEN, (menu_x - 100, menu_y), 200, 50)
+        new_game = Button("New Game", GREEN, (menu_x - 150, menu_y), 200, 50)
         new_game.draw()
         
         exit_btn = Button("Exit", RED, (menu_x + 250, menu_y), 200, 50)
@@ -408,7 +434,7 @@ def playGame(chosen_word, attempts_left, selected_cat):
 
         moves_left = plain_font.render(str(attempts_left), True, WHITE)
         cat_text = plain_font.render(selected_cat, True, WHITE)
-        menu_btn = Button("MAIN MENU", GREEN, (600, 550), 200, 50)
+        menu_btn = Button("MAIN MENU", GREEN, (800, 10), 200, 50)
         menu_btn.rect = pygame.rect.Rect(600, 500, 100, 25)
         menu_btn.draw()
         hangman_image = hangman_list[attempts_left]
