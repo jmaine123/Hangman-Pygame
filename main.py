@@ -66,15 +66,26 @@ with open("/Users/user/Desktop/Code_Games/Hangman/words.py") as f:
 
 # reading data from webscraping
 with open('dc_characters.txt', 'rb') as handle: 
-    data = handle.read() 
+    dc = handle.read()
+    
+with open('countries.txt', 'rb') as ct: 
+    ctry = ct.read()
+
+with open('capitals.txt', 'rb') as cpt: 
+    cap = cpt.read()
+    
   
   
 # reconstructing the data as dictionary 
-dc_characters = pickle.loads(data)
-
+dc_characters = pickle.loads(dc)
+countries = pickle.loads(ctry)
+capitals = pickle.loads(cap)
 
 # combing data from multiple sources both manual and webscraping
 word_dict.update(dc_characters)
+word_dict.update(countries)
+word_dict.update(capitals)
+
 
     
 # print(word_dict)
@@ -243,8 +254,12 @@ def selectCategory():
         grandma_btn.draw()
         fruit_btn = Button("Fruits", GREEN, (50, 50), 100, 50)
         fruit_btn.draw()
-        dc_btn = Button("DC Comics", GREEN, (50, 150), 150, 50)
+        dc_btn = Button("DC Comics", GREEN, (50, 150), 180, 50)
         dc_btn.draw()
+        country_btn = Button("Countries", GREEN, (50, 250), 180, 50)
+        country_btn.draw()
+        capitals_btn = Button("Capitals and States", GREEN, (500, 150), 300, 50)
+        capitals_btn.draw()
         
         # btn_list = []
         
@@ -287,7 +302,12 @@ def selectCategory():
         if dc_btn.checkClicked():
             selected_cat = "DC Comics"
             break
-            
+        if country_btn.checkClicked():
+            selected_cat = "Countries"
+            break
+        if capitals_btn.checkClicked():
+            selected_cat = "Capitals"
+            break
 
         
             
