@@ -63,6 +63,16 @@ with open("/Users/user/Desktop/Code_Games/Hangman/words.py") as f:
     data = f.read()
     word_dict = ast.literal_eval(data)
     
+dict_paths = ['dc_characters.txt', 'countries.txt','capitals.txt', 'flowers.txt']
+
+
+# for path in dict_paths:
+#     with open(path, 'rb') as handle: 
+#         dt = handle.read()
+#         print(dt)
+#         new_data = pickle.load(dt)
+#         word_dict.update(new_data)
+    
 
 # reading data from webscraping
 with open('dc_characters.txt', 'rb') as handle: 
@@ -73,19 +83,27 @@ with open('countries.txt', 'rb') as ct:
 
 with open('capitals.txt', 'rb') as cpt: 
     cap = cpt.read()
-    
+
+with open('flowers.txt', 'rb') as f: 
+    fl = f.read()
+
+with open('childhood_cartoons.txt', 'rb') as cc: 
+    ch = cc.read()
   
   
 # reconstructing the data as dictionary 
 dc_characters = pickle.loads(dc)
 countries = pickle.loads(ctry)
 capitals = pickle.loads(cap)
+flowers = pickle.loads(fl)
+cartoons = pickle.loads(ch)
 
 # combing data from multiple sources both manual and webscraping
 word_dict.update(dc_characters)
 word_dict.update(countries)
 word_dict.update(capitals)
-
+word_dict.update(flowers)
+word_dict.update(cartoons)
 
     
 # print(word_dict)
@@ -250,16 +268,20 @@ def selectCategory():
         family_btn.draw()
         zaya_friends_btn = Button("Zaya Friends", GREEN, (300, 450), 200, 50)
         zaya_friends_btn.draw()
-        grandma_btn = Button("Grandma's Phrases", GREEN, (500, 50), 300, 50)
+        grandma_btn = Button("Grandma's Phrases", RED, (500, 50), 300, 50)
         grandma_btn.draw()
+        capitals_btn = Button("Capitals and States", RED, (500, 150), 300, 50)
+        capitals_btn.draw()
+        childhood_cartoons_btn = Button("Childhood Cartoons", GREEN, (500, 250), 300, 50)
+        childhood_cartoons_btn.draw()
         fruit_btn = Button("Fruits", GREEN, (50, 50), 100, 50)
         fruit_btn.draw()
-        dc_btn = Button("DC Comics", GREEN, (50, 150), 180, 50)
+        dc_btn = Button("DC Comics", RED, (50, 150), 180, 50)
         dc_btn.draw()
         country_btn = Button("Countries", GREEN, (50, 250), 180, 50)
         country_btn.draw()
-        capitals_btn = Button("Capitals and States", GREEN, (500, 150), 300, 50)
-        capitals_btn.draw()
+        flowers_btn = Button("Flowers", RED, (50, 350), 150, 50)
+        flowers_btn.draw()
         
         # btn_list = []
         
@@ -307,6 +329,12 @@ def selectCategory():
             break
         if capitals_btn.checkClicked():
             selected_cat = "Capitals"
+            break
+        if flowers_btn.checkClicked():
+            selected_cat = "Flowers"
+            break
+        if childhood_cartoons_btn.checkClicked():
+            selected_cat = "Childhood Cartoons"
             break
 
         
@@ -396,7 +424,7 @@ def playGame(chosen_word, attempts_left, selected_cat):
         else:
             text_surface = plain_font.render(display_word, True, WHITE)
 
-        moves_left = plain_font.render(str(attempts_left), True, WHITE)
+        moves_left = smaller_plain_font.render(f'Attempts Left: {attempts_left}', True, WHITE)
         cat_text = plain_font.render(selected_cat, True, WHITE)
         menu_btn = Button("MAIN MENU", GREEN, (800, 10), 200, 50)
         menu_btn.rect = pygame.rect.Rect(600, 500, 100, 25)
@@ -410,7 +438,7 @@ def playGame(chosen_word, attempts_left, selected_cat):
         # screen.blit(text_surface, (SCREEN_WIDTH // 2 - text_surface.get_width() // 2, SCREEN_HEIGHT / 2))
         screen.blit(text_surface, (IMAGE_PADDING + hangman_image.get_width() + 50, SCREEN_HEIGHT / 2))
         screen.blit(hangman_image, (IMAGE_PADDING, 200))
-        screen.blit(moves_left, (20,500))
+        screen.blit(moves_left, (10,500))
         screen.blit(cat_text, (20,50))
 
         # Check for keyboard input

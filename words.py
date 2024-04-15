@@ -15,7 +15,9 @@
         "Wolverine", "Cyclops", "Jean Grey", "Beast", "Luke Cage",
         "Dare Devil", "Sand man", "Beast", "Silver Surfer", "Captain Marvel",
         "Venom", "Magneto", "Night Crawler", "Madame Web", "Carnage",
-        "King pin", "Doctor Octopus", "The Lizard", " She Hulk", "Doctor Doom"
+        "King pin", "Doctor Octopus", "The Lizard", " She Hulk", "Doctor Doom",
+        "Juggernaut", "Thanos", "Hank Pym", "Storm", "Phoenix", "Elektra", "Shocker",
+        "Cable", "Gambit", ""
     ],
     "Artists": [
         "Jay Z", "Queen Latifah", "DMX", "Snoop Dogg", "Jadakiss", "J Cole",
@@ -26,7 +28,11 @@
         "Usher", "Cardi B", "DMX", "Meg The Stallion", "Chris Brown",
         "Rihanna", "The Fugees", "Aretha Franklin", "Jay Rock", "Kanye West",
         "Kendrick Lamar", "Kid Cudi", "James Brown", "Michael Jackson", "Drake", "Kendrick Lamar",
-        "Madonna", "Britney Spears", "Billie Eillish", "Bob Marley", "Jay - Z", "Beyonce", "Destiny Childs"
+        "Madonna", "Britney Spears", "Billie Eillish", "Bob Marley", "Jay - Z", "Beyonce", "Destiny Childs",
+        "Mase", "MC Lyte", "Adele", "LL Cool J", "Glorilla", "Foxy Brown", "Jodeci", "G - Unit", "The Game",
+        "Mariah Carey", "Ariana Grande", "N - Sync", "Backstreet Boys", "One Direction", "TLC", "Missy Elliot",
+        "Eminem", "Dr. Dre", "Snoop Dog", "Christina Aguilera", "Eve", "Sean Paul", "Lauryn Hill", "Run DMC",
+        
     ],
     "NBA": [
         "LeBron James", "Carmelo Anthony", "Michael Jordan", "Kobe Bryant",
