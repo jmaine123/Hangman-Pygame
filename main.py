@@ -8,12 +8,13 @@ FPS = 60
 pygame.init()
 pygame.mixer.init
 SCREEN_WIDTH = 1000
-SCREEN_HEIGHT = 600
+SCREEN_HEIGHT = 800
 PURPLE = (51, 0, 204)
 BLACK = (0, 0, 0)
 WHITE = (255, 255, 255)
 GREEN = (0, 255, 0)
 YELLOW = (255, 223, 0)
+ORANGE = (255, 165, 0)
 RED = (255,0,0)
 FONT_SIZE = 36
 SMALL_FONT_SIZE = 25
@@ -243,7 +244,7 @@ def resetGame():
     global guessed_letters
     guessed_letters = set()
     score = 0
-    difficulty = "Eas"
+    difficulty = "Easy"
 
     
 
@@ -303,6 +304,7 @@ def drawGuessLetters(chosen_word):
 
 def selectCategory():
     global selected_cat
+    global difficulty
     
     while True:         
         screen.fill(YELLOW)
@@ -316,30 +318,43 @@ def selectCategory():
         # btn_y = 150
         
         # All buttons on the category page
+        select_msg = plain_font.render("SELECT A CATEGORY BELOW", True, PURPLE )
+        screen.blit(select_msg, (250, 30))
         
-        marvel_btn = Button("Marvel", GREEN, (300, 50), 120, 50)
+        first_column = 100
+        second_column = 400
+        third_column = 600
+        first_row = 200
+        second_row = first_row + 100
+        third_row = second_row + 100
+        fourth_row = third_row + 100
+        fifth_row = fourth_row + 100
+        
+        marvel_btn = Button("Marvel", GREEN, (second_column, first_row), 120, 50)
         marvel_btn.draw()
-        nba_btn = Button("NBA", GREEN, (300, 150), 100, 50)
+        nba_btn = Button("NBA", ORANGE, (second_column, second_row), 100, 50)
         nba_btn.draw()
-        artist_btn = Button("Artists", GREEN, (300, 250), 120, 50)
+        artist_btn = Button("Artists", ORANGE, (second_column, third_row), 120, 50)
         artist_btn.draw()
-        family_btn = Button("Family", GREEN, (300, 350), 120, 50)
+        family_btn = Button("Family", GREEN, (second_column, fourth_row), 120, 50)
         family_btn.draw()
-        zaya_friends_btn = Button("Zaya Friends", GREEN, (500, 350), 200, 50)
+        cereal_btn = Button("Cereal", GREEN, (second_column, fifth_row), 120, 50)
+        cereal_btn.draw()
+        zaya_friends_btn = Button("Zaya Friends", GREEN, (third_column, fourth_row), 200, 50)
         zaya_friends_btn.draw()
-        grandma_btn = Button("Grandma's Phrases", RED, (500, 50), 300, 50)
+        grandma_btn = Button("Grandma's Phrases", RED, (third_column, first_row), 300, 50)
         grandma_btn.draw()
-        capitals_btn = Button("Capitals and States", RED, (500, 150), 300, 50)
+        capitals_btn = Button("Capitals and States", RED, (third_column, second_row), 300, 50)
         capitals_btn.draw()
-        childhood_cartoons_btn = Button("Childhood Cartoons", RED, (500, 250), 300, 50)
+        childhood_cartoons_btn = Button("Childhood Cartoons", RED, (third_column, third_row), 300, 50)
         childhood_cartoons_btn.draw()
-        fruit_btn = Button("Fruits", GREEN, (50, 50), 100, 50)
+        fruit_btn = Button("Fruits", GREEN, (first_column, first_row), 100, 50)
         fruit_btn.draw()
-        dc_btn = Button("DC Comics", RED, (50, 150), 180, 50)
+        dc_btn = Button("DC Comics", RED, (first_column, second_row), 180, 50)
         dc_btn.draw()
-        country_btn = Button("Countries", GREEN, (50, 250), 180, 50)
+        country_btn = Button("Countries", RED, (first_column, third_row), 180, 50)
         country_btn.draw()
-        flowers_btn = Button("Flowers", RED, (50, 350), 150, 50)
+        flowers_btn = Button("Flowers", ORANGE, (first_column, fourth_row), 150, 50)
         flowers_btn.draw()
         
         # btn_list = []
@@ -361,14 +376,18 @@ def selectCategory():
 
         if marvel_btn.checkClicked():
             selected_cat = "Marvel"
+            difficulty = "Easy"
             return selected_cat
         if artist_btn.checkClicked():
             selected_cat = "Artists"
+            difficulty = "Normal"
             return selected_cat
         if nba_btn.checkClicked():
             selected_cat = "NBA"
+            difficulty = "Normal"
             return selected_cat
         if family_btn.checkClicked():
+            difficulty = "Easy"
             selected_cat = "Smikle Family"
             return selected_cat
         if zaya_friends_btn.checkClicked():
@@ -376,24 +395,35 @@ def selectCategory():
             return selected_cat
         if grandma_btn.checkClicked():
             selected_cat = "Grandma's Phrases"
+            difficulty = "Hard"
             return selected_cat
         if fruit_btn.checkClicked():
             selected_cat = "Fruits"
+            difficulty = "Easy"
             return selected_cat
         if dc_btn.checkClicked():
             selected_cat = "DC Comics"
+            difficulty = "Hard"
             return selected_cat
         if country_btn.checkClicked():
             selected_cat = "Countries"
+            difficulty = "Hard"
             return selected_cat
         if capitals_btn.checkClicked():
             selected_cat = "Capitals"
+            difficulty = "Hard"
             return selected_cat
         if flowers_btn.checkClicked():
             selected_cat = "Flowers"
+            difficulty = "Normal"
             return selected_cat
         if childhood_cartoons_btn.checkClicked():
             selected_cat = "Childhood Cartoons"
+            difficulty = "Hard"
+            return selected_cat
+        if cereal_btn.checkClicked():
+            selected_cat = "Cereal"
+            difficulty = "Easy"
             return selected_cat
 
         

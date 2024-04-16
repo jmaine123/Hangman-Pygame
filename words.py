@@ -91,5 +91,10 @@
         "Key Lime", "Lemon", "Apricot", "Guava", "Tangerine", "Passion Fruit", "Grapefruit", "Pomegranate", "Avocado",
         "Dragon Fruit", "Papaya"
         
+    ],
+    "Cereal": [
+        "Cap'n Crunch", "Cornflakes","Apple Jacks", "Cheerios", "Grape Nut", "Honey Comb", "Honey Nut Cheerios", "Raisin Bran",
+        "Rice Krispies", "Wheaties", "Franken Berry", "Oreo O's", "Cookie Crisps", "Fruit Loops", "Golden Grahams", "Coco Pebbles",
+        "Rice Chex", "Special K", "Cocoa Puffs", "Reese's Puffs", "Crunch Berries", "Raisin Squares", "Life", "Nut & Honey"       
     ]
 }
