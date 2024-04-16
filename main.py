@@ -243,7 +243,7 @@ def resetGame():
     global guessed_letters
     guessed_letters = set()
     score = 0
-    difficulty = "Easy"
+    difficulty = "Eas"
 
     
 
