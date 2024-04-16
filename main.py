@@ -45,6 +45,14 @@ guessed_letters = set()
 non_letters = ["!", ".", "'", "?", ",", "&", ":"]
 title_update = True
 
+#Scoring Settings
+difficulty = "Easy"
+score = 0
+high_score = 0
+easy_add = 250
+normal_add = 500
+hard_add = 700
+
 
 hangman_list = []
 
@@ -123,62 +131,107 @@ selected_cat = "Marvel"
 class Button:
     def __init__(self, txt, color, pos, width, height):
         self.text = txt
+        self.text_surf = menu_font.render(self.text, True, PURPLE)
         self.color = color
+        self.display_color = self.color
+        self.hover_color = WHITE
         self.pos = pos
         self.height = height
         self.width = width
         self.button = pygame.rect.Rect(self.pos[0], self.pos[1], self.width, self.height)
+        self.text_rect = self.text_surf.get_rect(center = self.button.center)
+        self.border_rect = pygame.rect.Rect(self.pos[0] - 2, self.pos[1] - 2, self.width + 4, self.height + 4)
         self.clicked = False
         
     def draw(self):
-        # menu_font = pygame.font.Font('freesansbold.ttf', 32)
-        text = menu_font.render(self.text, True, BLACK)
-        pygame.draw.rect(screen, self.color, self.button)
-        screen.blit(text, (self.pos[0] + 10, self.pos[1]+ 10))
+        # border_rect = pygame.rect.Rect(self.pos[0] - 2, self.pos[1] - 2, self.width + 4, self.height + 4)
+        pygame.draw.rect(screen, PURPLE, self.border_rect, border_radius=15)
+        pygame.draw.rect(screen, self.display_color, self.button, border_radius=15)
+        screen.blit(self.text_surf, self.text_rect)
     
     def checkClicked(self):
         mouse_pos = pygame.mouse.get_pos()
         mouse_click = pygame.mouse.get_pressed()
         if self.button.collidepoint(mouse_pos):
+            self.display_color = self.hover_color
             if mouse_click[0] == 1 and self.clicked == False:
+                # print("click")
                 btn_sound.play()
                 self.clicked = True
                 return True
         if mouse_click[0] == 0:
+            self.display_color = self.color
             self.clicked = False
     
     def isHoveredOver(self, color):
         mouse_pos = pygame.mouse.get_pos()
         over = self.button.collidepoint(mouse_pos)
+        
+        
+        
             
 
 
 def displayGameStatus(display_word, attempts_left, chosen_word):
+    global high_score
+    global score
     losing_text_options = ["Nice Try!!!", "Oh Sorry!!!", "Oh So Close!!!", "Try again", "Loser!!!!!"]
     chosen_losing_text = random.choice(losing_text_options).upper()
     if attempts_left == 0:
-        pygame.time.delay(1000)
+        pygame.time.delay(3000)
         crowd_booing.play()
         screen.fill("Black")
+        score = 0
+        if score > high_score:
+            high_score = score
+    
         game_status= chosen_losing_text + " the word was " + chosen_word
         font = pygame.font.Font(None, BIG_FONT_SIZE)
         status_surface = font.render(game_status, True, WHITE)
-        screen.blit(status_surface, (SCREEN_WIDTH // 2 - status_surface.get_width() // 2, SCREEN_HEIGHT / 2))
+        screen.blit(status_surface, (SCREEN_WIDTH // 2 - status_surface.get_width() // 2, SCREEN_HEIGHT / 2))        
         pygame.display.flip()
+
 
 
     elif " __ " not in display_word:
         full_correct_sound.play()
-        pygame.time.delay(2000)
+        pygame.time.delay(3000)
         cheer_sound.play()
-        # cheer_sound.fadeout(3)
         game_status = "You Won!!!"
+        handleScore()
         screen.fill(GREEN)
         font = pygame.font.Font(None, BIG_FONT_SIZE)
         status_surface = font.render(game_status, True, BLACK)
         screen.blit(status_surface, (SCREEN_WIDTH // 2 - status_surface.get_width() // 2, SCREEN_HEIGHT / 2))
         pygame.display.flip()
         
+ 
+ 
+def handleScore():
+    global score
+    if difficulty == "Easy":
+        score+= easy_add
+    elif difficulty == "Normal":
+        score+= normal_add
+    else:
+        score+= hard_add
+        
+        
+        
+def drawscore():
+    if score > high_score:
+        score_color = GREEN
+    else:
+        score_color = WHITE
+    
+    display_score = smaller_plain_font.render(f'Score: {score}', True, score_color)
+    display_high_score = smaller_plain_font.render(f'High Score: {high_score}', True, GREEN)
+    screen.blit(display_score, (800, 100))
+    screen.blit(display_high_score, (500, 100))
+ 
+ 
+  
+  
         
 
 def configBoard(category):
@@ -189,6 +242,9 @@ def configBoard(category):
 def resetGame():
     global guessed_letters
     guessed_letters = set()
+    score = 0
+    difficulty = "Easy"
+
     
 
 
@@ -240,6 +296,9 @@ def drawGuessLetters(chosen_word):
         screen.blit(ltr_surface, (first_ltr_x, 550))
         
         first_ltr_x+= 30
+
+
+
         
 
 def selectCategory():
@@ -266,13 +325,13 @@ def selectCategory():
         artist_btn.draw()
         family_btn = Button("Family", GREEN, (300, 350), 120, 50)
         family_btn.draw()
-        zaya_friends_btn = Button("Zaya Friends", GREEN, (300, 450), 200, 50)
+        zaya_friends_btn = Button("Zaya Friends", GREEN, (500, 350), 200, 50)
         zaya_friends_btn.draw()
         grandma_btn = Button("Grandma's Phrases", RED, (500, 50), 300, 50)
         grandma_btn.draw()
         capitals_btn = Button("Capitals and States", RED, (500, 150), 300, 50)
         capitals_btn.draw()
-        childhood_cartoons_btn = Button("Childhood Cartoons", GREEN, (500, 250), 300, 50)
+        childhood_cartoons_btn = Button("Childhood Cartoons", RED, (500, 250), 300, 50)
         childhood_cartoons_btn.draw()
         fruit_btn = Button("Fruits", GREEN, (50, 50), 100, 50)
         fruit_btn.draw()
@@ -302,40 +361,40 @@ def selectCategory():
 
         if marvel_btn.checkClicked():
             selected_cat = "Marvel"
-            break
+            return selected_cat
         if artist_btn.checkClicked():
             selected_cat = "Artists"
-            break
+            return selected_cat
         if nba_btn.checkClicked():
             selected_cat = "NBA"
-            break
+            return selected_cat
         if family_btn.checkClicked():
             selected_cat = "Smikle Family"
-            break
+            return selected_cat
         if zaya_friends_btn.checkClicked():
             selected_cat = "Zaya's Friends"
-            break
+            return selected_cat
         if grandma_btn.checkClicked():
             selected_cat = "Grandma's Phrases"
-            break
+            return selected_cat
         if fruit_btn.checkClicked():
             selected_cat = "Fruits"
-            break
+            return selected_cat
         if dc_btn.checkClicked():
             selected_cat = "DC Comics"
-            break
+            return selected_cat
         if country_btn.checkClicked():
             selected_cat = "Countries"
-            break
+            return selected_cat
         if capitals_btn.checkClicked():
             selected_cat = "Capitals"
-            break
+            return selected_cat
         if flowers_btn.checkClicked():
             selected_cat = "Flowers"
-            break
+            return selected_cat
         if childhood_cartoons_btn.checkClicked():
             selected_cat = "Childhood Cartoons"
-            break
+            return selected_cat
 
         
             
@@ -367,12 +426,12 @@ def mainMenu():
         title_surface = title_font.render("H A N G M A N", True, PURPLE)
         screen.blit(title_surface, (SCREEN_WIDTH //2 - title_surface.get_width()//2, 50))
         
-        menu_x = 300
+        menu_x = 250
         menu_y = SCREEN_HEIGHT//2
-        new_game = Button("New Game", GREEN, (menu_x - 150, menu_y), 200, 50)
+        new_game = Button("New Game", GREEN, (menu_x, menu_y), 175, 50)
         new_game.draw()
         
-        exit_btn = Button("Exit", RED, (menu_x + 250, menu_y), 200, 50)
+        exit_btn = Button("Quit", RED, (menu_x + 370, menu_y), 175, 50)
         exit_btn.draw()
 
         pygame.display.flip()
@@ -398,6 +457,7 @@ def mainMenu():
 
 
 def playGame(chosen_word, attempts_left, selected_cat):
+    global guessed_letters
     clock = pygame.time.Clock()
     running = True
     while running:   
@@ -415,8 +475,7 @@ def playGame(chosen_word, attempts_left, selected_cat):
         screen.fill(PURPLE)
         
         display_word = swapLetters(chosen_word)
-        # font = pygame.font.Font(None, FONT_SIZE)
-        # small_font = pygame.font.Font(None, SMALL_FONT_SIZE)
+
         if len(chosen_word) > 20: 
             text_surface = super_small_text.render(display_word, True, WHITE)
         elif len(chosen_word) > 10:
@@ -427,7 +486,7 @@ def playGame(chosen_word, attempts_left, selected_cat):
         moves_left = smaller_plain_font.render(f'Attempts Left: {attempts_left}', True, WHITE)
         cat_text = plain_font.render(selected_cat, True, WHITE)
         menu_btn = Button("MAIN MENU", GREEN, (800, 10), 200, 50)
-        menu_btn.rect = pygame.rect.Rect(600, 500, 100, 25)
+        # menu_btn.rect = pygame.rect.Rect(600, 500, 100, 25)
         menu_btn.draw()
         hangman_image = hangman_list[attempts_left]
         
@@ -440,7 +499,21 @@ def playGame(chosen_word, attempts_left, selected_cat):
         screen.blit(hangman_image, (IMAGE_PADDING, 200))
         screen.blit(moves_left, (10,500))
         screen.blit(cat_text, (20,50))
-
+        
+        
+        # Change category during game. Not working
+        new_cat_btn = Button("Change Category", GREEN, (450, 10), 300, 50)
+        if len(guessed_letters) == 0:
+            new_cat_btn.draw() 
+        if new_cat_btn.checkClicked():
+            new_cat = selectCategory()
+            print(selected_cat)
+            attempts_left = 6
+            new_chosen_word = configBoard(new_cat)
+            guessed_letters = set()
+            playGame(new_chosen_word, attempts_left, new_cat)
+        
+        
         # Check for keyboard input
         keys = pygame.key.get_pressed()
         for key in range(pygame.K_a, pygame.K_z + 1):
@@ -455,6 +528,7 @@ def playGame(chosen_word, attempts_left, selected_cat):
                         correct_sound.play()
         
         drawGuessLetters(chosen_word)
+        drawscore()
                         
         # Update the display
         pygame.display.flip()

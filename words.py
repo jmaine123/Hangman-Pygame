@@ -32,6 +32,8 @@
         "Mase", "MC Lyte", "Adele", "LL Cool J", "Glorilla", "Foxy Brown", "Jodeci", "G - Unit", "The Game",
         "Mariah Carey", "Ariana Grande", "N - Sync", "Backstreet Boys", "One Direction", "TLC", "Missy Elliot",
         "Eminem", "Dr. Dre", "Snoop Dog", "Christina Aguilera", "Eve", "Sean Paul", "Lauryn Hill", "Run DMC",
+        "Cher", "Coi Leray", "Patti LeBelle", "Jackson Five", "Lil Bow Wow", "Lil Romeo", "Master P",
+        "Pit Bull", "DJ Khaled", "Notorious BIG", "Ice Cube", "Vanilla Ice",
         
     ],
     "NBA": [
@@ -48,13 +50,22 @@
         "Jimmy Butler", "Shaquille O'Neal", "Kyrie Irving", "Zion Williamson",
         "Ja Morant", "Scottie Pippen", "Jalen Brunson", "Julius Randle", "Stephen A Smith", "Philadelphia Sixers",
         "Tracey McGrady", "Vince Carter", "Patrick Ewing", "Yao Ming", "Miami Heat", "Indiana Pacers", "Orlando Magic",
-        "Doc Rivers"
+        "Doc Rivers", "Kristap Porzingus", "Nikola Jokic", "Mitchell Robinson", "Ray Allen", "Paul Pierce",
+        "Chris Bosh", "Clyde Drexler", "Hakeen Olajuwon", "Reggie Miller", "Chris Paul", "John Starks", "John Stockton",
+        "Karl Malone", "Joakim Noah", "Jermaine Oneal", "Metta World Peace", "Detroit Pistons", "Minnesota Timberwolves",
+        "Full Court Press", "Play in Tournament", "Alley Oop", "Kevin Love", "Allen Iverson", "Tyler Herro", "Spud Webb",
+        "Charles Barkey", "Charles Oakley", "Kenny Smith", "Victor Wembanyama", "Gary Payton", "Horace Grant", "Ben Wallace", 
+        "Rasheed Wallace", "Kenyon Martin", "Mike Miller", "Moses Malone", "Richard Hamilton", "Chauncey Billups", 
+        "Dikembe Mutumbo", "Giannis Antetokounmpo", "Rick Barry", "Larry Bird", "Magic Johnson", "Julius Erving", "Walt Frazier",
+        "George Gervin", "John Havlicek", "Jason Kidd", "Kevin McHale", "Dirk Nowitzki", "Oscar Robinson", "David Robinson",
+        "Bill Russell", "Wilt Chamberlain", "Dennis Rodman", "David Robinson", "Isiah Thomas", "Dwyane Wade", "Jerry West",
+        "Dominque Wilkins", "James Worthy", "Bill Walton"
     ],
     "Smikle Family": [
-        "Jermaine", "Denise", "Zaya", "Sharon", "Denise", "Carl Smikle", 
+        "Jermaine", "Denise", "Zaya", "Sharon", "Denise", "Carl Earl Smikle", 
         "Naomi Brady", "Ingrid", "Twyla", "Denver", "Jose Lopez", "Roderick", "Jazmine", "Charise", "Dori",
         "Madison", "Uncle Dougie", "Samuel", "Kevin", "Franchesca", "Dozer", "Miriam Smith", "Ephraim Brady", "Nerissa Lynch",
-        "Caleb Smikle", "Uncle Peter", "Enez Brady", "John Brady"
+        "Caleb Smikle", "Uncle Peter", "Enez Brady", "John Brady", "Damien Anderson", "Tanesha Anderson", "Errol Smikle"
         
     ],
     "Zaya's Friends": [
@@ -65,19 +76,20 @@
         "Oona", "Marcella", "Madison", "Rosie", "Anastasia", "Zaire", "George", "Cristina"
         
     ],
-        "Grandma's Phrases": [
-            "Don't bother me", "Your head side!", "Those that don't hear, feel", "Get Lost!!!", "What kind of weather is it outside?",
-            "I am not a Senior Citizen!", "Get the hell of my phone!", "I am not cooking!", "I have a doctor appointment tomorrow", "Pick up my prescription at CVS",
-            "Keep it Down!", "Never treat somebody better than how they treat you", "Alexa! Play Beres Hammond!", "Not enough food in the soup!",
-            "Its too salty", "I need to use the bathroom", "Alexa! Play Glenn Washington!", "Alexa! Play Put That Women First", "Sharpen your teeth", "I know you like my hand back"
-            "Whatever!!!", "Stay ya yard!!!"
+    "Grandma's Phrases": [
+        "Don't bother me", "Your head side!", "Those that don't hear, feel", "Get Lost!!!", "What kind of weather is it outside?",
+        "I am not a Senior Citizen!", "Get the hell of my phone!", "I am not cooking!", "I have a doctor appointment tomorrow", "Pick up my prescription at CVS",
+        "Keep it Down!", "Never treat somebody better than how they treat you", "Alexa! Play Beres Hammond!", "Not enough food in the soup!",
+        "Its too salty", "I need to use the bathroom", "Alexa! Play Glenn Washington!", "Alexa! Play Put That Women First", "Sharpen your teeth", "I know you like my hand back"
+        "Whatever!!!", "Stay ya yard!!!", "Scammers!!!", "Should I bring my bottle of water?", "I need to pick up a few things",
+        "Tell them no salt on my fries!", "Life is for living"
         
     ],
-        "Fruits": [
-            "Apples", "Bananas", "Orange", "Pear", "Pineapple", "Grapes", "Mango", "Watermelon", "Cantalope", "Blackberry", "Blueberry"
-            "Cherry", "Rasberry", "Cranberry", "Strawberry", "Honeydew", "Peach", "Coconut", "Plum", "Kiwi",
-            "Key Lime", "Lemon", "Apricot", "Guava", "Tangerine", "Passion Fruit", "Grapefruit", "Pomegranate", "Avocado",
-            "Dragon Fruit", "Papaya"
+    "Fruits": [
+        "Apples", "Bananas", "Orange", "Pear", "Pineapple", "Grapes", "Mango", "Watermelon", "Cantalope", "Blackberry", "Blueberry"
+        "Cherry", "Rasberry", "Cranberry", "Strawberry", "Honeydew", "Peach", "Coconut", "Plum", "Kiwi",
+        "Key Lime", "Lemon", "Apricot", "Guava", "Tangerine", "Passion Fruit", "Grapefruit", "Pomegranate", "Avocado",
+        "Dragon Fruit", "Papaya"
         
     ]
 }
