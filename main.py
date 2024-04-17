@@ -29,7 +29,7 @@ MAIN_MENU_BTN_HEIGHT = 50
 
 #game variables
 screen = pygame.display.set_mode((SCREEN_WIDTH, SCREEN_HEIGHT))
-pygame.display.set_caption("Hangman Two Game")
+pygame.display.set_caption("Smikle's Hangman Game")
 menu_font = pygame.font.SysFont("skia", 32)
 title_font = pygame.font.SysFont("skia", 62, bold=True)
 plain_font = pygame.font.SysFont("skia", FONT_SIZE, bold=True)
@@ -40,6 +40,7 @@ game_music = pygame.mixer.Sound("Industry And Technology.mp3")
 correct_sound = pygame.mixer.Sound("game-sound-correct.wav")
 full_correct_sound = pygame.mixer.Sound("correct-2.wav") 
 wrong_sound = pygame.mixer.Sound("game-sound-wrong.wav")
+letter_buzzer = pygame.mixer.Sound("letter_buzzer.wav")
 cheer_sound = pygame.mixer.Sound("crowd-cheer.wav")
 crowd_booing = pygame.mixer.Sound("crowdbooing_01.wav")
 guessed_letters = set()
@@ -50,9 +51,9 @@ title_update = True
 difficulty = "Easy"
 score = 0
 high_score = 0
-easy_add = 250
-normal_add = 500
-hard_add = 700
+easy_points = 250
+normal_points = 500
+hard_points = 700
 
 
 hangman_list = []
@@ -98,6 +99,9 @@ with open('flowers.txt', 'rb') as f:
 
 with open('childhood_cartoons.txt', 'rb') as cc: 
     ch = cc.read()
+
+with open('disney.txt', 'rb') as dsny: 
+    ds = dsny.read()
   
   
 # reconstructing the data as dictionary 
@@ -106,6 +110,7 @@ countries = pickle.loads(ctry)
 capitals = pickle.loads(cap)
 flowers = pickle.loads(fl)
 cartoons = pickle.loads(ch)
+disney = pickle.loads(ds)
 
 # combing data from multiple sources both manual and webscraping
 word_dict.update(dc_characters)
@@ -113,7 +118,7 @@ word_dict.update(countries)
 word_dict.update(capitals)
 word_dict.update(flowers)
 word_dict.update(cartoons)
-
+word_dict.update(disney)
     
 # print(word_dict)
 category_list = word_dict.keys()
@@ -211,11 +216,11 @@ def displayGameStatus(display_word, attempts_left, chosen_word):
 def handleScore():
     global score
     if difficulty == "Easy":
-        score+= easy_add
+        score+= easy_points
     elif difficulty == "Normal":
-        score+= normal_add
+        score+= normal_points
     else:
-        score+= hard_add
+        score+= hard_points
         
         
         
@@ -255,7 +260,7 @@ def swapLetters(chosen_word):
         if letter in guessed_letters or letter in non_letters:
             board.append(letter + " ")
         elif letter == " ":
-            board.append("    ")
+            board.append("   ")
         else:
             board.append(" __ ")
     return "".join(board)
@@ -285,18 +290,18 @@ def draw_hangman_title():
 
 
 def drawGuessLetters(chosen_word):
-    font = pygame.font.Font(None, FONT_SIZE)
+    # font = pygame.font.Font(None, FONT_SIZE)
     guessed_msg = plain_font.render("Guessed Letters: ", True, WHITE)
     screen.blit(guessed_msg, (0, 550))
     first_ltr_x = guessed_msg.get_width() + 10
     for ltr in guessed_letters:
         if ltr in chosen_word:
-            ltr_surface = font.render(ltr, True, GREEN)
+            ltr_surface = plain_font.render(ltr, True, GREEN)
         else:
-            ltr_surface = font.render(ltr, True, RED)
+            ltr_surface = plain_font.render(ltr, True, RED)
         screen.blit(ltr_surface, (first_ltr_x, 550))
         
-        first_ltr_x+= 30
+        first_ltr_x+= 40
 
 
 
@@ -321,9 +326,9 @@ def selectCategory():
         select_msg = plain_font.render("SELECT A CATEGORY BELOW", True, PURPLE )
         screen.blit(select_msg, (250, 30))
         
-        first_column = 100
+        first_column = 70
         second_column = 400
-        third_column = 600
+        third_column = 650
         first_row = 200
         second_row = first_row + 100
         third_row = second_row + 100
@@ -340,14 +345,16 @@ def selectCategory():
         family_btn.draw()
         cereal_btn = Button("Cereal", GREEN, (second_column, fifth_row), 120, 50)
         cereal_btn.draw()
-        zaya_friends_btn = Button("Zaya Friends", GREEN, (third_column, fourth_row), 200, 50)
-        zaya_friends_btn.draw()
         grandma_btn = Button("Grandma's Phrases", RED, (third_column, first_row), 300, 50)
         grandma_btn.draw()
         capitals_btn = Button("Capitals and States", RED, (third_column, second_row), 300, 50)
         capitals_btn.draw()
         childhood_cartoons_btn = Button("Childhood Cartoons", RED, (third_column, third_row), 300, 50)
         childhood_cartoons_btn.draw()
+        zaya_friends_btn = Button("Zaya Friends", GREEN, (third_column, fourth_row), 200, 50)
+        zaya_friends_btn.draw()
+        disney_btn = Button("Disney Classics", GREEN, (third_column, fifth_row), 300, 50)
+        disney_btn.draw()
         fruit_btn = Button("Fruits", GREEN, (first_column, first_row), 100, 50)
         fruit_btn.draw()
         dc_btn = Button("DC Comics", RED, (first_column, second_row), 180, 50)
@@ -425,7 +432,10 @@ def selectCategory():
             selected_cat = "Cereal"
             difficulty = "Easy"
             return selected_cat
-
+        if disney_btn.checkClicked():
+            selected_cat = "Disney"
+            difficulty = "Easy"
+            return selected_cat
         
             
         
@@ -506,6 +516,8 @@ def playGame(chosen_word, attempts_left, selected_cat):
         
         display_word = swapLetters(chosen_word)
 
+
+        # draw the chosen word smaller based on the length of the words
         if len(chosen_word) > 20: 
             text_surface = super_small_text.render(display_word, True, WHITE)
         elif len(chosen_word) > 10:
@@ -524,7 +536,9 @@ def playGame(chosen_word, attempts_left, selected_cat):
             global title_update
             title_update = True
             return False
-        # screen.blit(text_surface, (SCREEN_WIDTH // 2 - text_surface.get_width() // 2, SCREEN_HEIGHT / 2))
+        
+        
+        # Display most of content of basic game
         screen.blit(text_surface, (IMAGE_PADDING + hangman_image.get_width() + 50, SCREEN_HEIGHT / 2))
         screen.blit(hangman_image, (IMAGE_PADDING, 200))
         screen.blit(moves_left, (10,500))
@@ -556,13 +570,19 @@ def playGame(chosen_word, attempts_left, selected_cat):
                         attempts_left -= 1
                     else:
                         correct_sound.play()
-        
+                # else:
+                #     letter_buzzer.play()
+
+
+        # Draw score and letters guessed
         drawGuessLetters(chosen_word)
         drawscore()
                         
         # Update the display
         pygame.display.flip()
 
+
+        # check if win or lose in order to display separate screen
         displayGameStatus(display_word, attempts_left, chosen_word)
         
         # Check for game over conditions

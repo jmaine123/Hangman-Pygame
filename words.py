@@ -28,12 +28,17 @@
         "Usher", "Cardi B", "DMX", "Meg The Stallion", "Chris Brown",
         "Rihanna", "The Fugees", "Aretha Franklin", "Jay Rock", "Kanye West",
         "Kendrick Lamar", "Kid Cudi", "James Brown", "Michael Jackson", "Drake", "Kendrick Lamar",
-        "Madonna", "Britney Spears", "Billie Eillish", "Bob Marley", "Jay - Z", "Beyonce", "Destiny Childs",
-        "Mase", "MC Lyte", "Adele", "LL Cool J", "Glorilla", "Foxy Brown", "Jodeci", "G - Unit", "The Game",
-        "Mariah Carey", "Ariana Grande", "N - Sync", "Backstreet Boys", "One Direction", "TLC", "Missy Elliot",
+        "Madonna", "Britney Spears", "Billie Eillish", "Bob Marley", "Jay-Z", "Beyonce", "Destiny Childs",
+        "Mase", "MC Lyte", "Adele", "LL Cool J", "Glorilla", "Foxy Brown", "Jodeci", "G-Unit", "The Game",
+        "Mariah Carey", "Ariana Grande", "N Sync", "Backstreet Boys", "One Direction", "TLC", "Missy Elliot",
         "Eminem", "Dr. Dre", "Snoop Dog", "Christina Aguilera", "Eve", "Sean Paul", "Lauryn Hill", "Run DMC",
         "Cher", "Coi Leray", "Patti LeBelle", "Jackson Five", "Lil Bow Wow", "Lil Romeo", "Master P",
-        "Pit Bull", "DJ Khaled", "Notorious BIG", "Ice Cube", "Vanilla Ice",
+        "Pit Bull", "DJ Khaled", "Notorious BIG", "Ice Cube", "Vanilla Ice", "Janet Jackson", "Shakira", "Jlo",
+        "OutKast", "Big Boi", "Jamie Foxx", "Mary J Blige", "Method Man", "Redman", "Busta Rhymes", "T-Pain", 
+        "Kelly Rowland", "Fantasia", "Jennifer Hudson", "Big Pun", "Ashanti", "Monica", "Brandy", "Angie Martinez",
+        "Elephant man", "Shaggy", "Ginuwine", "Wyclef Jean", "Taylor Swift", "Lady Gaga", "Selena Gomez", "Ed Sheeran",
+        "Imagine Dragons", "Migos", "Kelly Clarkson", "Bruno Mars", "Future", "The Chainsmokers", "Whitney Houston",
+        "Katy Perry", "Post Malone", "Pink", "Travis Scott"
         
     ],
     "NBA": [
@@ -80,7 +85,7 @@
         "Don't bother me", "Your head side!", "Those that don't hear, feel", "Get Lost!!!", "What kind of weather is it outside?",
         "I am not a Senior Citizen!", "Get the hell of my phone!", "I am not cooking!", "I have a doctor appointment tomorrow", "Pick up my prescription at CVS",
         "Keep it Down!", "Never treat somebody better than how they treat you", "Alexa! Play Beres Hammond!", "Not enough food in the soup!",
-        "Its too salty", "I need to use the bathroom", "Alexa! Play Glenn Washington!", "Alexa! Play Put That Women First", "Sharpen your teeth", "I know you like my hand back"
+        "Its too salty", "I need to use the bathroom", "Alexa! Play Glenn Washington!", "Alexa! Play Put That Women First", "Sharpen your teeth", "I know you like my hand back",
         "Whatever!!!", "Stay ya yard!!!", "Scammers!!!", "Should I bring my bottle of water?", "I need to pick up a few things",
         "Tell them no salt on my fries!", "Life is for living"
         
