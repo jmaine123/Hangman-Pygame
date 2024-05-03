@@ -87,7 +87,8 @@
         "Keep it Down!", "Never treat somebody better than how they treat you", "Alexa! Play Beres Hammond!", "Not enough food in the soup!",
         "Its too salty", "I need to use the bathroom", "Alexa! Play Glenn Washington!", "Alexa! Play Put That Women First", "Sharpen your teeth", "I know you like my hand back",
         "Whatever!!!", "Stay ya yard!!!", "Scammers!!!", "Should I bring my bottle of water?", "I need to pick up a few things",
-        "Tell them no salt on my fries!", "Life is for living"
+        "Tell them no salt on my fries!", "Life is for living", "You full of **** like crabs", "Go Away!!!", "Funny, Bugs Bunny",
+        "Oh yeah honey!", "I have a gift!"
         
     ],
     "Fruits": [

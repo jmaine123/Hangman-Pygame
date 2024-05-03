@@ -43,8 +43,8 @@ wrong_sound = pygame.mixer.Sound("game-sound-wrong.wav")
 letter_buzzer = pygame.mixer.Sound("letter_buzzer.wav")
 cheer_sound = pygame.mixer.Sound("crowd-cheer.wav")
 crowd_booing = pygame.mixer.Sound("crowdbooing_01.wav")
-guessed_letters = set()
-non_letters = ["!", ".", "'", "?", ",", "&", ":"]
+guessed_letters = []
+non_letters = ["!", ".", "'", "?", ",", "&", ":", "*"]
 title_update = True
 
 #Scoring Settings
@@ -187,9 +187,8 @@ def displayGameStatus(display_word, attempts_left, chosen_word):
         pygame.time.delay(3000)
         crowd_booing.play()
         screen.fill("Black")
-        score = 0
-        if score > high_score:
-            high_score = score
+        
+        resetScore()
     
         game_status= chosen_losing_text + " the word was " + chosen_word
         font = pygame.font.Font(None, BIG_FONT_SIZE)
@@ -213,8 +212,11 @@ def displayGameStatus(display_word, attempts_left, chosen_word):
         
  
  
+ 
+ 
 def handleScore():
     global score
+    
     if difficulty == "Easy":
         score+= easy_points
     elif difficulty == "Normal":
@@ -224,9 +226,12 @@ def handleScore():
         
         
         
-def drawscore():
+def drawScore():
+    global high_score
+    
     if score > high_score:
         score_color = GREEN
+        high_score = score
     else:
         score_color = WHITE
     
@@ -245,11 +250,14 @@ def configBoard(category):
     return chosen_word
 
 
+def resetScore():
+    global score
+    score = 0
+
 def resetGame():
     global guessed_letters
-    guessed_letters = set()
-    score = 0
-    difficulty = "Easy"
+    guessed_letters.clear()
+
 
     
 
@@ -260,7 +268,7 @@ def swapLetters(chosen_word):
         if letter in guessed_letters or letter in non_letters:
             board.append(letter + " ")
         elif letter == " ":
-            board.append("   ")
+            board.append("   " + "   " + "   ")
         else:
             board.append(" __ ")
     return "".join(board)
@@ -292,16 +300,18 @@ def draw_hangman_title():
 def drawGuessLetters(chosen_word):
     # font = pygame.font.Font(None, FONT_SIZE)
     guessed_msg = plain_font.render("Guessed Letters: ", True, WHITE)
-    screen.blit(guessed_msg, (0, 550))
-    first_ltr_x = guessed_msg.get_width() + 10
+    screen.blit(guessed_msg, (0, SCREEN_HEIGHT - 100))
+    next_ltr_x = guessed_msg.get_width() + 10
+    width_of_letter = 5
+    ltr_space = 30
     for ltr in guessed_letters:
         if ltr in chosen_word:
             ltr_surface = plain_font.render(ltr, True, GREEN)
         else:
             ltr_surface = plain_font.render(ltr, True, RED)
-        screen.blit(ltr_surface, (first_ltr_x, 550))
+        screen.blit(ltr_surface, (next_ltr_x + width_of_letter + ltr_space , SCREEN_HEIGHT - 100))
         
-        first_ltr_x+= 40
+        next_ltr_x += 40
 
 
 
@@ -329,7 +339,7 @@ def selectCategory():
         first_column = 70
         second_column = 400
         third_column = 650
-        first_row = 200
+        first_row = 250
         second_row = first_row + 100
         third_row = second_row + 100
         fourth_row = third_row + 100
@@ -477,9 +487,10 @@ def mainMenu():
         pygame.display.flip()
         
         if new_game.checkClicked():
+            resetScore()
             selectCategory()
             global guessed_letters
-            guessed_letters = set()
+            guessed_letters.clear()
             chosen_word = configBoard(selected_cat) 
             attempts_left = 6
             playGame(chosen_word, attempts_left, selected_cat)
@@ -539,10 +550,11 @@ def playGame(chosen_word, attempts_left, selected_cat):
         
         
         # Display most of content of basic game
-        screen.blit(text_surface, (IMAGE_PADDING + hangman_image.get_width() + 50, SCREEN_HEIGHT / 2))
+        # screen.blit(text_surface, (IMAGE_PADDING + hangman_image.get_width() + 50, SCREEN_HEIGHT // 2))
+        screen.blit(text_surface, (20, SCREEN_HEIGHT - SCREEN_HEIGHT // 3))
         screen.blit(hangman_image, (IMAGE_PADDING, 200))
-        screen.blit(moves_left, (10,500))
-        screen.blit(cat_text, (20,50))
+        screen.blit(moves_left, (10,SCREEN_HEIGHT - SCREEN_HEIGHT//5))
+        screen.blit(cat_text, (20, 50))
         
         
         # Change category during game. Not working
@@ -554,7 +566,7 @@ def playGame(chosen_word, attempts_left, selected_cat):
             print(selected_cat)
             attempts_left = 6
             new_chosen_word = configBoard(new_cat)
-            guessed_letters = set()
+            guessed_letters.clear()
             playGame(new_chosen_word, attempts_left, new_cat)
         
         
@@ -564,7 +576,7 @@ def playGame(chosen_word, attempts_left, selected_cat):
             if keys[key]:
                 letter = chr(key).upper()
                 if letter not in guessed_letters:
-                    guessed_letters.add(letter)
+                    guessed_letters.append(letter)
                     if letter not in chosen_word:
                         wrong_sound.play()
                         attempts_left -= 1
@@ -576,7 +588,7 @@ def playGame(chosen_word, attempts_left, selected_cat):
 
         # Draw score and letters guessed
         drawGuessLetters(chosen_word)
-        drawscore()
+        drawScore()
                         
         # Update the display
         pygame.display.flip()
@@ -595,8 +607,10 @@ def playGame(chosen_word, attempts_left, selected_cat):
 
 
 
-game_music.play(-1)
-mainMenu()
+
+if __name__ == "__main__":
+    game_music.play(-1)
+    mainMenu()
 
 # Wait for a moment before quitting
 # pygame.time.delay(2000)
