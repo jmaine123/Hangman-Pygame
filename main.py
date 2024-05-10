@@ -181,7 +181,7 @@ class Button:
 def displayGameStatus(display_word, attempts_left, chosen_word):
     global high_score
     global score
-    losing_text_options = ["Nice Try!!!", "Oh Sorry!!!", "Oh So Close!!!", "Try again", "Loser!!!!!"]
+    losing_text_options = ["NICE TRY!!!", "OH SORRY!!!", "OH SO CLOSE!!!", "TRY AGAIN", "LOSER!!!!!"]
     chosen_losing_text = random.choice(losing_text_options).upper()
     if attempts_left == 0:
         pygame.time.delay(3000)
@@ -193,7 +193,7 @@ def displayGameStatus(display_word, attempts_left, chosen_word):
         game_status= chosen_losing_text + " the word was " + chosen_word
         font = pygame.font.Font(None, BIG_FONT_SIZE)
         status_surface = font.render(game_status, True, WHITE)
-        screen.blit(status_surface, (SCREEN_WIDTH // 2 - status_surface.get_width() // 2, SCREEN_HEIGHT / 2))        
+        screen.blit(status_surface, (SCREEN_WIDTH // 2 - status_surface.get_width() // 2, SCREEN_HEIGHT // 2 - status_surface.get_height() // 2))        
         pygame.display.flip()
 
 
@@ -202,12 +202,12 @@ def displayGameStatus(display_word, attempts_left, chosen_word):
         full_correct_sound.play()
         pygame.time.delay(3000)
         cheer_sound.play()
-        game_status = "You Won!!!"
+        game_status = "YOU WON!!!"
         handleScore()
         screen.fill(GREEN)
         font = pygame.font.Font(None, BIG_FONT_SIZE)
         status_surface = font.render(game_status, True, BLACK)
-        screen.blit(status_surface, (SCREEN_WIDTH // 2 - status_surface.get_width() // 2, SCREEN_HEIGHT / 2))
+        screen.blit(status_surface, (SCREEN_WIDTH // 2 - status_surface.get_width() // 2, SCREEN_HEIGHT // 2 - status_surface.get_height() // 2))
         pygame.display.flip()
         
  

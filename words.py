@@ -2,7 +2,7 @@
     "Marvel": [
         "The Hulk", "Spiderman", "The Avengers", "Iron Man", "Captain America",
         "Thor", "Loki", "Black Widow", "Hawk Eye", "The Red Skull", "Thanos",
-        "Scarlett Witch", "Vison", "Zemo", "Green Goblin", "The Jackal",
+        "Scarlett Witch", "Vision", "Zemo", "Green Goblin", "The Jackal",
         "Fantastic Four", "The Thing", "Silver Surfer",
         "Guardians of the Galaxy", "Nick Fury", "Shield", "Vulture",
         "Doctor Octopus", "Venom", "The Punisher", "Blade", "Magneto",
@@ -17,7 +17,8 @@
         "Venom", "Magneto", "Night Crawler", "Madame Web", "Carnage",
         "King pin", "Doctor Octopus", "The Lizard", " She Hulk", "Doctor Doom",
         "Juggernaut", "Thanos", "Hank Pym", "Storm", "Phoenix", "Elektra", "Shocker",
-        "Cable", "Gambit", ""
+        "Cable", "Gambit", "Jubi Lee", "Cable", "Sinister", "Callisto", "Nightcrawler",
+        "Robert Kelly"
     ],
     "Artists": [
         "Jay Z", "Queen Latifah", "DMX", "Snoop Dogg", "Jadakiss", "J Cole",
@@ -70,7 +71,8 @@
         "Jermaine", "Denise", "Zaya", "Sharon", "Denise", "Carl Earl Smikle", 
         "Naomi Brady", "Ingrid", "Twyla", "Denver", "Jose Lopez", "Roderick", "Jazmine", "Charise", "Dori",
         "Madison", "Uncle Dougie", "Samuel", "Kevin", "Franchesca", "Dozer", "Miriam Smith", "Ephraim Brady", "Nerissa Lynch",
-        "Caleb Smikle", "Uncle Peter", "Enez Brady", "John Brady", "Damien Anderson", "Tanesha Anderson", "Errol Smikle"
+        "Caleb Smikle", "Uncle Peter", "Enez Brady", "John Brady", "Damien Anderson", "Tanesha Anderson", "Errol Smikle",
+        "Brownie"
         
     ],
     "Zaya's Friends": [
@@ -88,7 +90,7 @@
         "Its too salty", "I need to use the bathroom", "Alexa! Play Glenn Washington!", "Alexa! Play Put That Women First", "Sharpen your teeth", "I know you like my hand back",
         "Whatever!!!", "Stay ya yard!!!", "Scammers!!!", "Should I bring my bottle of water?", "I need to pick up a few things",
         "Tell them no salt on my fries!", "Life is for living", "You full of **** like crabs", "Go Away!!!", "Funny, Bugs Bunny",
-        "Oh yeah honey!", "I have a gift!"
+        "Oh yeah honey!", "I have a gift!", "Don't bother my piece"
         
     ],
     "Fruits": [
