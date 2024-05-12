@@ -29,7 +29,7 @@
         "Usher", "Cardi B", "DMX", "Meg The Stallion", "Chris Brown",
         "Rihanna", "The Fugees", "Aretha Franklin", "Jay Rock", "Kanye West",
         "Kendrick Lamar", "Kid Cudi", "James Brown", "Michael Jackson", "Drake", "Kendrick Lamar",
-        "Madonna", "Britney Spears", "Billie Eillish", "Bob Marley", "Jay-Z", "Beyonce", "Destiny Childs",
+        "Madonna", "Britney Spears", "Billie Eillish", "Bob Marley", "Jay Z", "Beyonce", "Destiny Childs",
         "Mase", "MC Lyte", "Adele", "LL Cool J", "Glorilla", "Foxy Brown", "Jodeci", "G-Unit", "The Game",
         "Mariah Carey", "Ariana Grande", "N Sync", "Backstreet Boys", "One Direction", "TLC", "Missy Elliot",
         "Eminem", "Dr. Dre", "Snoop Dog", "Christina Aguilera", "Eve", "Sean Paul", "Lauryn Hill", "Run DMC",
@@ -37,9 +37,12 @@
         "Pit Bull", "DJ Khaled", "Notorious BIG", "Ice Cube", "Vanilla Ice", "Janet Jackson", "Shakira", "Jlo",
         "OutKast", "Big Boi", "Jamie Foxx", "Mary J Blige", "Method Man", "Redman", "Busta Rhymes", "T-Pain", 
         "Kelly Rowland", "Fantasia", "Jennifer Hudson", "Big Pun", "Ashanti", "Monica", "Brandy", "Angie Martinez",
-        "Elephant man", "Shaggy", "Ginuwine", "Wyclef Jean", "Taylor Swift", "Lady Gaga", "Selena Gomez", "Ed Sheeran",
-        "Imagine Dragons", "Migos", "Kelly Clarkson", "Bruno Mars", "Future", "The Chainsmokers", "Whitney Houston",
-        "Katy Perry", "Post Malone", "Pink", "Travis Scott"
+        "Elephant Man", "Shaggy", "Ginuwine", "Wyclef Jean", "Taylor Swift", "Lady Gaga", "Selena Gomez", "Ed Sheeran",
+        "Imagine Dragons", "The Migos", "Kelly Clarkson", "Bruno Mars", "Future", "The Chainsmokers", "Whitney Houston",
+        "Katy Perry", "Post Malone", "Pink", "Travis Scott", "Gucci Mane", "Justin Bieber", "Sia", "Gwen Stefani",
+        "SWV", "Jodeci", "Ariana Grande", "Prince", "Elvis Presley", "Selena Gomez", "Justin Timberlake",
+        "Celine Dion", "Dua Lipa", "Frank Sinatra", "Bruce Springstein", "Pharrell Williams", "Little Richard",
+        "Diana Ross", "Otis Redding", "Beres Hammond", "Jimmy Cliff", "Ziggy Marley", "Buju Banton", "Stevie Wonder"
         
     ],
     "NBA": [
@@ -90,7 +93,7 @@
         "Its too salty", "I need to use the bathroom", "Alexa! Play Glenn Washington!", "Alexa! Play Put That Women First", "Sharpen your teeth", "I know you like my hand back",
         "Whatever!!!", "Stay ya yard!!!", "Scammers!!!", "Should I bring my bottle of water?", "I need to pick up a few things",
         "Tell them no salt on my fries!", "Life is for living", "You full of **** like crabs", "Go Away!!!", "Funny, Bugs Bunny",
-        "Oh yeah honey!", "I have a gift!", "Don't bother my piece"
+        "Oh yeah honey!", "I have a gift!", "Don't bother my peace"
         
     ],
     "Fruits": [
@@ -104,5 +107,26 @@
         "Cap'n Crunch", "Cornflakes","Apple Jacks", "Cheerios", "Grape Nut", "Honey Comb", "Honey Nut Cheerios", "Raisin Bran",
         "Rice Krispies", "Wheaties", "Franken Berry", "Oreo O's", "Cookie Crisps", "Fruit Loops", "Golden Grahams", "Coco Pebbles",
         "Rice Chex", "Special K", "Cocoa Puffs", "Reese's Puffs", "Crunch Berries", "Raisin Squares", "Life", "Nut & Honey"       
+    ],
+    "Child Games": [
+        "Mary Mack", "Tag", "Peek a boo", "Bloody Knuckles", "Pat-a-cake", "Rock Paper Scissors", "Thumb War",
+        "Red Hands", "Floor is lava", "Limbo", "London Bridge", "Red Rover", "Simon Says", "Sleeping Lions",
+        "Wrestling", "Buck Buck", "I Spy", "Truth or Dare", "Follow The Leader", "Uno", "House", "Mother, May I",
+        "Four Corners", "Jinx", "Monkey In The Middle", "Ding Dong Ditch", "Seven Up", "Tic-Tac-Toe", "Stone Skipping",
+        "Double Dutch", "Jumping Jacks", "Jumping Rope", "Leapfrog", "Hopscotch", "Basketball", "Baseball", "Dodgeball",
+        "Handball", "Hula Hoop", "Marbles", "Soccer", "Tug of War", "Catch", "Beanbag Toss", "Hide-And-Seek", "Freeze Tag",
+        "Cops and Robbers", "Monopoly", "Roblox", "Capture The Flag", "Telephone", "Marco Polo", "Red Light, Green Light",
+        "Jacks", "Tag", "Blind Man's Bluff", "Duck, Duck, Goose", "Musical Chairs", "Hot Potato", "Charades", "Treasure Hunt", 
+        "Scavenger Hunt", "Paper Airplanes", "Puzzles", "Hangman"
+       
+    ],
+    "Mothers' Duties": [
+        "Laundry", "Chef", "Referee", "Financial Planning", "Supporting Spouse", "Child care", "Therapist", "Health and Wellness",
+        "Emotional Support", "Conflict Resolution", "Nurturer", "Education and Guidance", "Maintaining Household", "Disciplinarian",
+        "Provider", "Role Model", "Comforter", "Get the children to brush their teeth before bed", "Pack up the lunch boxes",
+        "Make breakfast", "Feed the pets", "Help with Homework", "Go to Work", "Vacuum", "Help style with hair",
+        "Tidy up the toys", "Get kids dressed", "Pack the school bags", "Give Love", "Drive kids to school",
+        "Give hugs", "Personal assistant", "Give advise", "Give kids bath", "Tuck kids in bed", "Sing lullaby"
+       
     ]
 }

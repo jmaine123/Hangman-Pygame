@@ -7,7 +7,7 @@ import pickle
 FPS = 60
 pygame.init()
 pygame.mixer.init
-SCREEN_WIDTH = 1000
+SCREEN_WIDTH = 1400
 SCREEN_HEIGHT = 800
 PURPLE = (51, 0, 204)
 BLACK = (0, 0, 0)
@@ -16,11 +16,11 @@ GREEN = (0, 255, 0)
 YELLOW = (255, 223, 0)
 ORANGE = (255, 165, 0)
 RED = (255,0,0)
-FONT_SIZE = 36
+FONT_SIZE = 40
 SMALL_FONT_SIZE = 25
 SUPER_SMALL_FONT = 20
 BIG_FONT_SIZE = 50
-IMAGE_SIZE = (200, 200)
+IMAGE_SIZE = (300, 300)
 IMAGE_PADDING = 10
 MAIN_MENU_BTN_WIDTH = 200
 MAIN_MENU_BTN_HEIGHT = 50
@@ -31,20 +31,20 @@ MAIN_MENU_BTN_HEIGHT = 50
 screen = pygame.display.set_mode((SCREEN_WIDTH, SCREEN_HEIGHT))
 pygame.display.set_caption("Smikle's Hangman Game")
 menu_font = pygame.font.SysFont("skia", 32)
-title_font = pygame.font.SysFont("skia", 62, bold=True)
+title_font = pygame.font.SysFont("skia", 72, bold=True)
 plain_font = pygame.font.SysFont("skia", FONT_SIZE, bold=True)
 smaller_plain_font = pygame.font.SysFont("skia", SMALL_FONT_SIZE, bold=True)
 super_small_text = pygame.font.SysFont("skia", SUPER_SMALL_FONT, bold=True)
-btn_sound = pygame.mixer.Sound("mixkit-light-spell-873.wav")
-game_music = pygame.mixer.Sound("Industry And Technology.mp3")
-correct_sound = pygame.mixer.Sound("game-sound-correct.wav")
-full_correct_sound = pygame.mixer.Sound("correct-2.wav") 
-wrong_sound = pygame.mixer.Sound("game-sound-wrong.wav")
-letter_buzzer = pygame.mixer.Sound("letter_buzzer.wav")
-cheer_sound = pygame.mixer.Sound("crowd-cheer.wav")
-crowd_booing = pygame.mixer.Sound("crowdbooing_01.wav")
+btn_sound = pygame.mixer.Sound("./assets/mixkit-light-spell-873.wav")
+game_music = pygame.mixer.Sound("./assets/Industry And Technology.mp3")
+correct_sound = pygame.mixer.Sound("./assets/game-sound-correct.wav")
+full_correct_sound = pygame.mixer.Sound("./assets/correct-2.wav") 
+wrong_sound = pygame.mixer.Sound("./assets/game-sound-wrong.wav")
+letter_buzzer = pygame.mixer.Sound("./letter_buzzer.wav")
+cheer_sound = pygame.mixer.Sound("./assets/crowd-cheer.wav")
+crowd_booing = pygame.mixer.Sound("./assets/crowdbooing_01.wav")
 guessed_letters = []
-non_letters = ["!", ".", "'", "?", ",", "&", ":", "*"]
+non_letters = ["!", ".", "'", "?", ",", "&", ":", "*", "-", "%", "$", "#", "@"]
 title_update = True
 
 #Scoring Settings
@@ -60,8 +60,8 @@ hangman_list = []
 
 # load and add hangman images to list
 for i in range(0,7):
-    img_path = "hangman" + str(i) + ".png"
-    image = pygame.image.load(img_path).convert()
+    img_path = "./assets/hangman" + str(i) + ".png"
+    image = pygame.image.load(img_path).convert_alpha()
     img_scaled = pygame.transform.scale(image, IMAGE_SIZE)
     hangman_list.append(img_scaled)
     
@@ -102,6 +102,12 @@ with open('childhood_cartoons.txt', 'rb') as cc:
 
 with open('disney.txt', 'rb') as dsny: 
     ds = dsny.read()
+
+with open('periodic-table.txt', 'rb') as table: 
+    pt = table.read()
+
+with open('olympic-sports.txt', 'rb') as olympics: 
+    olys = olympics.read()
   
   
 # reconstructing the data as dictionary 
@@ -111,6 +117,8 @@ capitals = pickle.loads(cap)
 flowers = pickle.loads(fl)
 cartoons = pickle.loads(ch)
 disney = pickle.loads(ds)
+elements = pickle.loads(pt)
+ol_sports = pickle.loads(olys)
 
 # combing data from multiple sources both manual and webscraping
 word_dict.update(dc_characters)
@@ -119,6 +127,8 @@ word_dict.update(capitals)
 word_dict.update(flowers)
 word_dict.update(cartoons)
 word_dict.update(disney)
+word_dict.update(elements)
+word_dict.update(ol_sports)
     
 # print(word_dict)
 category_list = word_dict.keys()
@@ -235,10 +245,10 @@ def drawScore():
     else:
         score_color = WHITE
     
-    display_score = smaller_plain_font.render(f'Score: {score}', True, score_color)
-    display_high_score = smaller_plain_font.render(f'High Score: {high_score}', True, GREEN)
-    screen.blit(display_score, (800, 100))
-    screen.blit(display_high_score, (500, 100))
+    display_score = plain_font.render(f'Score: {score}', True, score_color)
+    display_high_score = plain_font.render(f'High Score: {high_score}', True, GREEN)
+    screen.blit(display_score, (SCREEN_WIDTH//2, 100))
+    screen.blit(display_high_score, (SCREEN_WIDTH - display_high_score.get_width() - 100, 100))
  
  
   
@@ -332,24 +342,33 @@ def selectCategory():
         # btn_x = 500
         # btn_y = 150
         
+        easy_msg = plain_font.render("EASY", True, GREEN)
+        normal_msg = plain_font.render("NORMAL", True, ORANGE)
+        hard_msg = plain_font.render("HARD", True, RED)
+        screen.blit(easy_msg, (SCREEN_WIDTH//3 - easy_msg.get_width()//2, 150))
+        screen.blit(normal_msg, (SCREEN_WIDTH//2 - normal_msg.get_width()//2, 150))
+        screen.blit(hard_msg, (SCREEN_WIDTH - SCREEN_WIDTH//3 - easy_msg.get_width()//2, 150))
+        
         # All buttons on the category page
         select_msg = plain_font.render("SELECT A CATEGORY BELOW", True, PURPLE )
-        screen.blit(select_msg, (250, 30))
+        screen.blit(select_msg, (SCREEN_WIDTH//2 - select_msg.get_width()//2, 30))
         
         first_column = 70
         second_column = 400
         third_column = 650
+        fourth_column = 1050
         first_row = 250
         second_row = first_row + 100
         third_row = second_row + 100
         fourth_row = third_row + 100
         fifth_row = fourth_row + 100
         
+        
         marvel_btn = Button("Marvel", GREEN, (second_column, first_row), 120, 50)
         marvel_btn.draw()
         nba_btn = Button("NBA", ORANGE, (second_column, second_row), 100, 50)
         nba_btn.draw()
-        artist_btn = Button("Artists", ORANGE, (second_column, third_row), 120, 50)
+        artist_btn = Button("Musical Artists", ORANGE, (third_column, fourth_row), 300, 50)
         artist_btn.draw()
         family_btn = Button("Family", GREEN, (second_column, fourth_row), 120, 50)
         family_btn.draw()
@@ -361,11 +380,11 @@ def selectCategory():
         capitals_btn.draw()
         childhood_cartoons_btn = Button("Childhood Cartoons", RED, (third_column, third_row), 300, 50)
         childhood_cartoons_btn.draw()
-        zaya_friends_btn = Button("Zaya Friends", GREEN, (third_column, fourth_row), 200, 50)
+        zaya_friends_btn = Button("Zaya Friends", GREEN, (first_column, first_row), 200, 50)
         zaya_friends_btn.draw()
         disney_btn = Button("Disney Classics", GREEN, (third_column, fifth_row), 300, 50)
         disney_btn.draw()
-        fruit_btn = Button("Fruits", GREEN, (first_column, first_row), 100, 50)
+        fruit_btn = Button("Fruits", GREEN, (second_column, third_row), 100, 50)
         fruit_btn.draw()
         dc_btn = Button("DC Comics", RED, (first_column, second_row), 180, 50)
         dc_btn.draw()
@@ -373,6 +392,14 @@ def selectCategory():
         country_btn.draw()
         flowers_btn = Button("Flowers", ORANGE, (first_column, fourth_row), 150, 50)
         flowers_btn.draw()
+        child_games_btn = Button("Child Games", GREEN, (first_column, fifth_row), 180, 50)
+        child_games_btn.draw()
+        mother_duty_btn = Button("Mothers' Duties", ORANGE, (fourth_column, first_row), 300, 50)
+        mother_duty_btn.draw()
+        periodic_table_btn = Button("Periodic Table", RED, (fourth_column, second_row), 300, 50)
+        periodic_table_btn.draw()
+        olympic_sport_btn = Button("Olympic Sports", ORANGE, (fourth_column, third_row), 300, 50)
+        olympic_sport_btn.draw()
         
         # btn_list = []
         
@@ -446,6 +473,22 @@ def selectCategory():
             selected_cat = "Disney"
             difficulty = "Easy"
             return selected_cat
+        if child_games_btn.checkClicked():
+            selected_cat = "Child Games"
+            difficulty = "Easy"
+            return selected_cat
+        if mother_duty_btn.checkClicked():
+            selected_cat = "Mothers' Duties"
+            difficulty = "Normal"
+            return selected_cat
+        if periodic_table_btn.checkClicked():
+            selected_cat = "Periodic Table"
+            difficulty = "Hard"
+            return selected_cat
+        if olympic_sport_btn.checkClicked():
+            selected_cat = "Olympic Sports"
+            difficulty = "Normal"
+            return selected_cat
         
             
         
@@ -476,7 +519,7 @@ def mainMenu():
         title_surface = title_font.render("H A N G M A N", True, PURPLE)
         screen.blit(title_surface, (SCREEN_WIDTH //2 - title_surface.get_width()//2, 50))
         
-        menu_x = 250
+        menu_x = SCREEN_WIDTH//4 + 170//2
         menu_y = SCREEN_HEIGHT//2
         new_game = Button("New Game", GREEN, (menu_x, menu_y), 175, 50)
         new_game.draw()
@@ -529,14 +572,14 @@ def playGame(chosen_word, attempts_left, selected_cat):
 
 
         # draw the chosen word smaller based on the length of the words
-        if len(chosen_word) > 20: 
+        if len(chosen_word) > 25: 
             text_surface = super_small_text.render(display_word, True, WHITE)
-        elif len(chosen_word) > 10:
+        elif len(chosen_word) > 15:
             text_surface = smaller_plain_font.render(display_word, True, WHITE)
         else:
             text_surface = plain_font.render(display_word, True, WHITE)
 
-        moves_left = smaller_plain_font.render(f'Attempts Left: {attempts_left}', True, WHITE)
+        moves_left = plain_font.render(f'Attempts Left: {attempts_left}', True, WHITE)
         cat_text = plain_font.render(selected_cat, True, WHITE)
         menu_btn = Button("MAIN MENU", GREEN, (800, 10), 200, 50)
         # menu_btn.rect = pygame.rect.Rect(600, 500, 100, 25)
@@ -550,10 +593,9 @@ def playGame(chosen_word, attempts_left, selected_cat):
         
         
         # Display most of content of basic game
-        # screen.blit(text_surface, (IMAGE_PADDING + hangman_image.get_width() + 50, SCREEN_HEIGHT // 2))
-        screen.blit(text_surface, (20, SCREEN_HEIGHT - SCREEN_HEIGHT // 3))
+        screen.blit(text_surface, (20, SCREEN_HEIGHT - SCREEN_HEIGHT // 4))
         screen.blit(hangman_image, (IMAGE_PADDING, 200))
-        screen.blit(moves_left, (10,SCREEN_HEIGHT - SCREEN_HEIGHT//5))
+        screen.blit(moves_left, (IMAGE_PADDING + IMAGE_SIZE[0] + 100,SCREEN_HEIGHT//2 - moves_left.get_height()))
         screen.blit(cat_text, (20, 50))
         
         
